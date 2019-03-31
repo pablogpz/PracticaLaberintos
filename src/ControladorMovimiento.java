@@ -1,5 +1,8 @@
 public class ControladorMovimiento {
 
+    private static final int POS_X_INI = 0;
+    private static final int POS_Y_INI = 0;
+
     private Posicion posicion;
 
     /**
@@ -62,7 +65,7 @@ public class ControladorMovimiento {
      * Resetea el controlador a la posición inicial
      */
     public void resetPosicion() {
-        setPosicionAbsoluta(new Posicion(0, 0));
+        setPosicionAbsoluta(new Posicion(POS_X_INI, POS_Y_INI));
     }
 
     /**

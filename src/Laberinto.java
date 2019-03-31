@@ -21,7 +21,8 @@ public class Laberinto {
     }
 
     /**
-     * Carga un laberinto a partir de una matriz de casillas que lo conforman
+     * Carga un laberinto a partir de una matriz de casillas que lo conforman.
+     * Pensado para cargar rápidamente un laberinto en el proceso de carga
      *
      * @param laberinto Matriz de casillas que conforman el laberinto
      */
