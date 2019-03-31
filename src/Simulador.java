@@ -19,17 +19,7 @@ public class Simulador {
         Objects.requireNonNull(cargador).cargarSiguienteLaberinto();
         System.out.println(Laberinto.recuperarInstancia());
 
-        jugador.controladorMovimiento().setPosicionRelativa(Direccion.ESTE, 5);
-        System.out.println(jugador);
-
-        jugador.controladorMovimiento().setPosicionRelativa(Direccion.SUR, 3);
-        System.out.println(jugador);
-
-        jugador.controladorMovimiento().setPosicionRelativa(Direccion.ESTE, 2);
-        System.out.println(jugador);
-
-        jugador.controladorMovimiento().setPosicionRelativa(Direccion.NORTE, 1);
-        System.out.println(jugador);
+        System.out.println(Laberinto.recuperarInstancia().casilla(new Posicion(0, 0)));
 
         // <- TESTING
     }

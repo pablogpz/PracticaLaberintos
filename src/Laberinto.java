@@ -21,6 +21,15 @@ public class Laberinto {
     }
 
     /**
+     * Carga un laberinto a partir de una matriz de casillas que lo conforman
+     *
+     * @param laberinto Matriz de casillas que conforman el laberinto
+     */
+    public void cargarLaberinto(Casilla[][] laberinto) {
+        this.laberinto = laberinto;
+    }
+
+    /**
      * Inserta una casilla en una posición determinada del Laberinto
      *
      * @param casilla  Casilla a insertar en el Laberinto
@@ -31,12 +40,11 @@ public class Laberinto {
     }
 
     /**
-     * Carga un laberinto a partir de una matriz de casillas que lo conforman
-     *
-     * @param laberinto Matriz de casillas que conforman el laberinto
+     * @param posicion Posición de la casilla a consultar
+     * @return Casilla del laberinto localizada en la posición suministrada
      */
-    public void cargarLaberinto(Casilla[][] laberinto) {
-        this.laberinto = laberinto;
+    public Casilla casilla(Posicion posicion) {
+        return laberinto[posicion.getX()][posicion.getY()];
     }
 
     /**
