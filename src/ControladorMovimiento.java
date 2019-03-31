@@ -23,8 +23,8 @@ public class ControladorMovimiento {
      * @param unidades  Unidades a desplazar. Solo se tiene en cuenta su valor absoluto
      * @throws IllegalArgumentException Si el movimiento resulta fuera de los límites del laberinto
      */
-    public void mover(Direccion direccion, int unidades) {
-        if (!movimientoLegal(direccion, unidades))
+    public void setPosicionRelativa(Direccion direccion, int unidades) {
+        if (!movRelativoLegal(direccion, unidades))
             throw new IllegalArgumentException("No se puede mover más allá de los límites del laberinto.\n\t" +
                     "Movimiento : " + unidades + " unidades en direccion " + direccion + "\n\tPosición actual " + getPosicion());
 
@@ -45,11 +45,33 @@ public class ControladorMovimiento {
     }
 
     /**
+     * Mueve la posición del controlador a una posición absoluta indicada por parámetro
+     *
+     * @param posicionAbsoluta Posición de destino
+     * @throws IllegalArgumentException Si la posición suministada está fuera de los límites del laberinto
+     */
+    public void setPosicionAbsoluta(Posicion posicionAbsoluta) {
+        if (!movAbsolutoLegal(posicionAbsoluta))
+            throw new IllegalArgumentException("Movimiento absoluto fuera de los límites del laberinto.\n\t" +
+                    "Movimiento : " + posicionAbsoluta);
+
+        setPosicion(posicionAbsoluta);
+    }
+
+    /**
+     * Resetea el controlador a la posición inicial
+     */
+    public void resetPosicion() {
+        setPosicionAbsoluta(new Posicion(0, 0));
+    }
+
+    /**
      * @param direccion Dirección de desplazamiento
      * @param unidades  Unidades a desplazar
-     * @return Si el movimiento es legal, es decir, está dentro de los límites del laberinto
+     * @return Si el movimiento relativo es legal, es decir, si el resultado de moverte ciertas unidades en una
+     * dirección está dentro de los límites del laberinto
      */
-    private boolean movimientoLegal(Direccion direccion, int unidades) {
+    private boolean movRelativoLegal(Direccion direccion, int unidades) {
         return direccion == Direccion.NORTE && getPosicion().getY() - Math.abs(unidades) >= 0 ||
                 direccion == Direccion.ESTE && getPosicion().getX() + Math.abs(unidades) < Laberinto.recuperarInstancia().getDimension() ||
                 direccion == Direccion.SUR && getPosicion().getY() + Math.abs(unidades) < Laberinto.recuperarInstancia().getDimension() ||
@@ -57,9 +79,24 @@ public class ControladorMovimiento {
     }
 
     /**
+     * @param posicionAbsoluta Posición absoluta destino del movimiento
+     * @return Si el movimiento absoluto es legal, es decir, es una posición dentro de los límites del laberinto
+     */
+    private boolean movAbsolutoLegal(Posicion posicionAbsoluta) {
+        return posicionAbsoluta.getX() >= 0 &&
+                posicionAbsoluta.getX() < Laberinto.recuperarInstancia().getDimension() &&
+                posicionAbsoluta.getY() >= 0 &&
+                posicionAbsoluta.getY() < Laberinto.recuperarInstancia().getDimension();
+    }
+
+    /**
      * @return Posición asociada al controlador
      */
     public Posicion getPosicion() {
         return posicion;
+    }
+
+    private void setPosicion(Posicion posicion) {
+        this.posicion = posicion;
     }
 }
