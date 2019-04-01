@@ -35,8 +35,9 @@ public class CargadorLaberinto {
         // Parsea el siguiente fichero
         parser.parsearFichero(itFichLaberintos.next());
         // Carga el laberinto parseado
-        Laberinto.recuperarInstancia().setUmbral(parser.getUmbral());
         Laberinto.recuperarInstancia().cargarLaberinto(parser.getLaberinto());
+        Laberinto.recuperarInstancia().setUmbral(parser.getUmbral());
+        Laberinto.recuperarInstancia().setPosObjetivc(parser.getPosObjetivo());
     }
 
     /**

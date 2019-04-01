@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -11,6 +12,7 @@ import java.util.Scanner;
 public class CasillaParser {
 
     private Casilla[][] laberinto;          // Laberinto parseado
+    private Posicion posObjetivo;           // Posición de la casilla objetivo
     private int umbral;                     // Umbral asociado al laberinto
 
     public CasillaParser() {
@@ -31,8 +33,13 @@ public class CasillaParser {
             // Lectura del resto de líneas: valores separados por comas
             for (int i = 0; i < Laberinto.recuperarInstancia().getDimension(); i++) {
                 valores = scanner.nextLine().split(",");
-                for (int j = 0; j < Laberinto.recuperarInstancia().getDimension(); j++)
-                    laberinto[i][j] = new Casilla(Integer.parseInt(valores[j]));
+                for (int j = 0; j < Laberinto.recuperarInstancia().getDimension(); j++) {
+                    Casilla casilla = new Casilla(Integer.parseInt(valores[j]));
+
+                    laberinto[i][j] = casilla;
+                    // Comprueba si es la casilla objetivo
+                    if (casilla.esObjetivo()) setPosObjetivo(new Posicion(i, j));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,10 +54,25 @@ public class CasillaParser {
     }
 
     /**
+     * @return Posición de la celda objetivo
+     * @throws NullPointerException Si no hay ninguna casilla objetivo
+     */
+    public Posicion getPosObjetivo() {
+        return Objects.requireNonNull(posObjetivo, "ERROR : No hay casilla objetivo en el laberinto");
+    }
+
+    /**
      * @return Umbral asociado al laberinto parseado
      */
     public int getUmbral() {
         return umbral;
+    }
+
+    /**
+     * @param posObjetivo Nueva posición de la casilla objetivo
+     */
+    private void setPosObjetivo(Posicion posObjetivo) {
+        this.posObjetivo = posObjetivo;
     }
 
     /**

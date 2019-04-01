@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ControladorMovimiento {
 
     private static final int POS_X_INI = 0;
@@ -17,6 +22,10 @@ public class ControladorMovimiento {
      */
     public ControladorMovimiento(Posicion posicionInicial) {
         this.posicion = posicionInicial;
+    }
+
+    public void setPosicionRelativa(Direccion direccion) {
+        setPosicionRelativa(direccion, 1);
     }
 
     /**
@@ -59,6 +68,13 @@ public class ControladorMovimiento {
                     "Movimiento : " + posicionAbsoluta);
 
         setPosicion(posicionAbsoluta);
+    }
+
+    public List<Direccion> movimientosPosibles() {
+        return new ArrayList<>(EnumSet.allOf(Direccion.class))
+                .stream()
+                .filter(direccion -> movRelativoLegal(direccion, 1))
+                .collect(Collectors.toList());
     }
 
     /**

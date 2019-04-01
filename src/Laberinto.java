@@ -9,6 +9,7 @@ public class Laberinto {
     private static Laberinto instancia;                 // Instancia Singleton del laberinto
 
     private Casilla[][] laberinto;                      // Matriz de casillas que representa un tablero
+    private Posicion posObjetivc;                       // Posición de la casilla objetivo
     private final int dimension;                        // Dimensión del laberinto
     private int umbral;                                 // Umbral asociado al laberinto
 
@@ -31,16 +32,6 @@ public class Laberinto {
     }
 
     /**
-     * Inserta una casilla en una posición determinada del Laberinto
-     *
-     * @param casilla  Casilla a insertar en el Laberinto
-     * @param posicion Posición del Laberinto en la que insertar la nueva casilla
-     */
-    public void insertarCasilla(Casilla casilla, Posicion posicion) {
-        laberinto[posicion.getX()][posicion.getY()] = casilla;
-    }
-
-    /**
      * @param posicion Posición de la casilla a consultar
      * @return Casilla del laberinto localizada en la posición suministrada
      */
@@ -59,6 +50,13 @@ public class Laberinto {
     }
 
     /**
+     * @return Posición de la casilla objetivo
+     */
+    public Posicion getPosObjetivc() {
+        return posObjetivc;
+    }
+
+    /**
      * @return Dimensión del laberinto
      */
     public int getDimension() {
@@ -73,6 +71,13 @@ public class Laberinto {
     }
 
     /**
+     * @param posObjetivc Posición de la celda objetivo
+     */
+    public void setPosObjetivc(Posicion posObjetivc) {
+        this.posObjetivc = posObjetivc;
+    }
+
+    /**
      * @param umbral Nuevo valor del umbral
      */
     public void setUmbral(int umbral) {
@@ -83,7 +88,9 @@ public class Laberinto {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("Umbral : ").append(getUmbral()).append("\n\n");
+        stringBuilder.append("Umbral : ").append(getUmbral()).append("\nPosición del objetivo : ")
+                .append(getPosObjetivc())
+                .append("\n\n");
         for (int i = 0; i < getDimension(); i++) {
             for (int j = 0; j < getDimension(); j++)
                 stringBuilder.append(laberinto[i][j]).append(" ");
