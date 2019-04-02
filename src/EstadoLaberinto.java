@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,7 +28,12 @@ public class EstadoLaberinto {
      * @return Estado inicial de un laberinto inexplorado
      */
     public static EstadoLaberinto estadoInicial() {
-        return new EstadoLaberinto(new Jugador(), new ArrayList<>(), Laberinto.recuperarInstancia().getUmbral());
+        // Nuevo jugador
+        Jugador jugador = new Jugador();
+        // Añade la posición inicial a las visitadas
+        List<Posicion> posVisitadas = new ArrayList<>(Collections.singletonList(jugador.controladorMovimiento().getPosicion()));
+
+        return new EstadoLaberinto(jugador, posVisitadas, Laberinto.recuperarInstancia().getUmbral());
     }
 
     /**
@@ -49,5 +55,21 @@ public class EstadoLaberinto {
      */
     public int getUmbral() {
         return umbral;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("\n-------------------------------------------------------------\n");
+
+        stringBuilder.append(jugador).append("\n");
+        stringBuilder.append("Posiciones visitadas : \n");
+        getPosVisitadas().forEach(pos -> stringBuilder.append("\t").append(pos).append("\n"));
+        stringBuilder.append("Umbral : ").append(getUmbral()).append("\n");
+
+        stringBuilder.append("-------------------------------------------------------------\n");
+
+        return stringBuilder.toString();
     }
 }

@@ -26,6 +26,22 @@ public abstract class ExpansorArbol {
     public abstract void ejecutar();
 
     /**
+     * Implementa la lógica de selección de operando para el árbol de decisión dado en el contexto apropiado
+     *
+     * @param nodo Nodo Árbol de decisión a evaluar
+     * @return Posición de destino calculada
+     */
+    protected abstract Posicion seleccionarOperando(TreeNode<EstadoLaberinto> nodo);
+
+    /**
+     * @param posicionDestino Posición de destino
+     * @return Coste sobre el umbral asociado a la posición de destino
+     */
+    protected int actualizarUmbral(Posicion posicionDestino) {
+        return Laberinto.recuperarInstancia().casilla(posicionDestino).getValor();
+    }
+
+    /**
      * @return Función heurística a aplicar a los nodos del árbol
      */
     protected Function<EstadoLaberinto, Integer> getHeuristica() {

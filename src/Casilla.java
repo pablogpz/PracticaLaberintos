@@ -38,6 +38,6 @@ public class Casilla {
 
     @Override
     public String toString() {
-        return "[" + getValor() + "]";
+        return esObjetivo() ? " " + getValor() + " " : "[" + getValor() + "]";
     }
 }

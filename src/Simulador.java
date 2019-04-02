@@ -8,7 +8,7 @@ public class Simulador {
         // TESTING ->
 
         CargadorLaberinto cargador = null;
-        Jugador jugador = new Jugador();
+        ExpansorArbol generacionYPrueba;
 
         try {
             cargador = new CargadorLaberinto(new File("res/laberintos"), new CasillaParser());
@@ -16,10 +16,17 @@ public class Simulador {
             e.printStackTrace();
         }
 
+        // Carga el primer laberinto
         Objects.requireNonNull(cargador).cargarSiguienteLaberinto();
-        System.out.println(Laberinto.recuperarInstancia());
+        generacionYPrueba = new GeneracionYPrueba();
 
-        System.out.println(Laberinto.recuperarInstancia().casilla(new Posicion(0, 0)));
+        //noinspection ConstantConditions
+        for (int i = 0; i < cargador.getCarpetaLaberintos().listFiles().length - 1; i++) {
+            Objects.requireNonNull(cargador).cargarSiguienteLaberinto();
+            System.out.println(Laberinto.recuperarInstancia());
+
+            generacionYPrueba.ejecutar();
+        }
 
         // <- TESTING
     }

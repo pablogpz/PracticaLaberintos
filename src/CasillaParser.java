@@ -31,14 +31,14 @@ public class CasillaParser {
             // Lectura de la primera línea: umbral
             setUmbral(Integer.parseInt(scanner.nextLine()));
             // Lectura del resto de líneas: valores separados por comas
-            for (int i = 0; i < Laberinto.recuperarInstancia().getDimension(); i++) {
+            for (int y = 0; y < Laberinto.recuperarInstancia().getDimension(); y++) {
                 valores = scanner.nextLine().split(",");
-                for (int j = 0; j < Laberinto.recuperarInstancia().getDimension(); j++) {
-                    Casilla casilla = new Casilla(Integer.parseInt(valores[j]));
+                for (int x = 0; x < Laberinto.recuperarInstancia().getDimension(); x++) {
+                    Casilla casilla = new Casilla(Integer.parseInt(valores[x]));
 
-                    laberinto[i][j] = casilla;
+                    laberinto[y][x] = casilla;
                     // Comprueba si es la casilla objetivo
-                    if (casilla.esObjetivo()) setPosObjetivo(new Posicion(i, j));
+                    if (casilla.esObjetivo()) setPosObjetivo(new Posicion(x, y));
                 }
             }
         } catch (Exception e) {

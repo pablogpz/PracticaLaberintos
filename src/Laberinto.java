@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * Clase que modela el comportamiento del Laberinto (encargado de gestionar las casillas
  * asociadas a este mismo). Dimensión establecida : 10
@@ -22,6 +24,14 @@ public class Laberinto {
     }
 
     /**
+     * @param posicion Posición de la casilla a consultar
+     * @return Casilla del laberinto localizada en la posición suministrada
+     */
+    public Casilla casilla(Posicion posicion) {
+        return laberinto[posicion.getY()][posicion.getX()];
+    }
+
+    /**
      * Carga un laberinto a partir de una matriz de casillas que lo conforman.
      * Pensado para cargar rápidamente un laberinto en el proceso de carga
      *
@@ -32,11 +42,32 @@ public class Laberinto {
     }
 
     /**
-     * @param posicion Posición de la casilla a consultar
-     * @return Casilla del laberinto localizada en la posición suministrada
+     * Inserta una casilla en una posición determinada del Laberinto
+     *
+     * @param casilla  Casilla a insertar en el Laberinto
+     * @param posicion Posición del Laberinto en la que insertar la nueva casilla
      */
-    public Casilla casilla(Posicion posicion) {
-        return laberinto[posicion.getX()][posicion.getY()];
+    private void insertarCasilla(Casilla casilla, Posicion posicion) {
+        laberinto[posicion.getY()][posicion.getX()] = casilla;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("Umbral : ").append(getUmbral())
+                .append("\nPosición del objetivo : ").append(getPosObjetivc()).append("\n\n")
+                .append("   0   1   2   3   4   5   6   7   8   9").append("\n");
+        for (int y = 0; y < getDimension(); y++) {
+            stringBuilder.append(y).append(" ");
+            for (int x = 0; x < getDimension(); x++)
+                stringBuilder.append(laberinto[y][x] != null ? laberinto[y][x] : "   ").append(" ");
+            stringBuilder.append(y).append("\n");
+        }
+        stringBuilder.append("   0   1   2   3   4   5   6   7   8   9").append("\n");
+
+
+        return stringBuilder.toString();
     }
 
     /**
@@ -84,19 +115,23 @@ public class Laberinto {
         this.umbral = umbral;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
+    /**
+     * Clase para representar soluciones al laberinto como un camino en el laberinto
+     */
+    public static final class Representable extends Laberinto {
 
-        stringBuilder.append("Umbral : ").append(getUmbral()).append("\nPosición del objetivo : ")
-                .append(getPosObjetivc())
-                .append("\n\n");
-        for (int i = 0; i < getDimension(); i++) {
-            for (int j = 0; j < getDimension(); j++)
-                stringBuilder.append(laberinto[i][j]).append(" ");
-            stringBuilder.append("\n");
+        /**
+         * Inicializa un laberinto con las posiciones que conforman la solución al problema
+         *
+         * @param posiciones Colección de posiciones que conforman la solución al problema
+         */
+        public Representable(List<Posicion> posiciones) {
+            super(Laberinto.recuperarInstancia().getDimension());
+
+            setPosObjetivc(Laberinto.recuperarInstancia().getPosObjetivc());
+            posiciones.forEach(posicion -> super.insertarCasilla
+                    (Laberinto.recuperarInstancia().casilla(posicion), posicion));
         }
 
-        return stringBuilder.toString();
     }
 }

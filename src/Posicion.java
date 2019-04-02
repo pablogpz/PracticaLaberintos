@@ -55,4 +55,14 @@ public class Posicion {
     public String toString() {
         return "{ x:" + getX() + ", y:" + getY() + " }";
     }
+
+    /**
+     * @param obj Posición a comparar
+     * @return Dos posiciones son iguales si coinciden sus coordenadas X e Y
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return getX() == ((Posicion) obj).getX() &&
+                getY() == ((Posicion) obj).getY();
+    }
 }
