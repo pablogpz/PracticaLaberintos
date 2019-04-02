@@ -21,11 +21,6 @@ public class Simulador {
 
         System.out.println(Laberinto.recuperarInstancia().casilla(new Posicion(0, 0)));
 
-        jugador.controladorMovimiento().setPosicionAbsoluta(new Posicion(1, 1));
-        jugador.controladorMovimiento().setPosicionRelativa(new MovimientoUnitario(Direccion.SUR));
-        System.out.println(jugador);
-        System.out.println(jugador.controladorMovimiento().movimientosPosibles());
-
         // <- TESTING
     }
 }
