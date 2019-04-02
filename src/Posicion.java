@@ -16,6 +16,14 @@ public class Posicion {
     }
 
     /**
+     * @param posicion Posición a copiar
+     */
+    public Posicion(Posicion posicion) {
+        x = posicion.getX();
+        y = posicion.getY();
+    }
+
+    /**
      * @return Valor en el eje X
      */
     public int getX() {

@@ -5,16 +5,17 @@ import java.util.stream.Collectors;
 
 public class ControladorMovimiento {
 
+    // Coordendas de la posición inicial común a los controladores de movimiento
     private static final int POS_X_INI = 0;
     private static final int POS_Y_INI = 0;
 
-    private Posicion posicion;
+    private Posicion posicion;                  // Posición actual del controlador
 
     /**
      * Instancia un controlador de movimiento en la posición {x:0, y:0}
      */
     public ControladorMovimiento() {
-        posicion = new Posicion(0, 0);
+        posicion = new Posicion(POS_X_INI, POS_Y_INI);
     }
 
     /**
@@ -24,37 +25,21 @@ public class ControladorMovimiento {
         this.posicion = posicionInicial;
     }
 
-    public void setPosicionRelativa(Direccion direccion) {
-        setPosicionRelativa(direccion, 1);
-    }
-
     /**
-     * Mueve la posición del controlador en la direccion {@code direccion} {@code unidades} unidades
+     * Mueve la posición del controlador mediante una transformación de movimiento {@link Movimiento}
      *
-     * @param direccion Dirección de desplazamiento
-     * @param unidades  Unidades a desplazar. Solo se tiene en cuenta su valor absoluto
+     * @param movimiento Contiene la dirección y unidades de desplazamiento
      * @throws IllegalArgumentException Si el movimiento resulta fuera de los límites del laberinto
      */
-    public void setPosicionRelativa(Direccion direccion, int unidades) {
-        if (!movRelativoLegal(direccion, unidades))
+    public void setPosicionRelativa(Movimiento movimiento) {
+        if (!movimientoLegal(aplicarMovimiento(movimiento)))
             throw new IllegalArgumentException("No se puede mover más allá de los límites del laberinto.\n\t" +
-                    "Movimiento : " + unidades + " unidades en direccion " + direccion + "\n\tPosición actual " + getPosicion());
+                    "Movimiento : " + movimiento + "\n\tPosición actual : " + getPosicion());
 
         // Mueve la posición en la dirección indicada las unidades indicadas
-        switch (direccion) {
-            case NORTE:
-                getPosicion().setY(getPosicion().getY() - Math.abs(unidades));
-                break;
-            case ESTE:
-                getPosicion().setX(getPosicion().getX() + Math.abs(unidades));
-                break;
-            case SUR:
-                getPosicion().setY(getPosicion().getY() + Math.abs(unidades));
-                break;
-            case OESTE:
-                getPosicion().setX(getPosicion().getX() - Math.abs(unidades));
-        }
+        setPosicion(aplicarMovimiento(movimiento));
     }
+
 
     /**
      * Mueve la posición del controlador a una posición absoluta indicada por parámetro
@@ -63,17 +48,36 @@ public class ControladorMovimiento {
      * @throws IllegalArgumentException Si la posición suministada está fuera de los límites del laberinto
      */
     public void setPosicionAbsoluta(Posicion posicionAbsoluta) {
-        if (!movAbsolutoLegal(posicionAbsoluta))
+        if (!movimientoLegal(posicionAbsoluta))
             throw new IllegalArgumentException("Movimiento absoluto fuera de los límites del laberinto.\n\t" +
                     "Movimiento : " + posicionAbsoluta);
 
         setPosicion(posicionAbsoluta);
     }
 
-    public List<Direccion> movimientosPosibles() {
-        return new ArrayList<>(EnumSet.allOf(Direccion.class))
+    /**
+     * Transforma la posición actual en otra posición por el movimiento indicado. No actualiza la posición actual
+     *
+     * @param movimiento Movimiento a aplicar
+     * @return Posición destino
+     */
+    public Posicion aplicarMovimiento(Movimiento movimiento) {
+        return Movimiento.funcionTransformacion().apply(new Posicion(getPosicion()), movimiento);
+    }
+
+    /**
+     * @return Lista de movimientos unitarios que resultan en movimientos posibles
+     */
+    public List<Movimiento> movimientosPosibles() {
+        // Lista de direcciones de movimiento válidas
+        List<Direccion> direccionesPosibles = new ArrayList<>(EnumSet.allOf(Direccion.class))
                 .stream()
-                .filter(direccion -> movRelativoLegal(direccion, 1))
+                .filter(direccion -> movimientoLegal(aplicarMovimiento(new MovimientoUnitario(direccion))))
+                .collect(Collectors.toList());
+        // Devuelve las direcciones de movimiento válidas como movimientos unitarios
+        return direccionesPosibles
+                .stream()
+                .map(MovimientoUnitario::new)
                 .collect(Collectors.toList());
     }
 
@@ -85,27 +89,14 @@ public class ControladorMovimiento {
     }
 
     /**
-     * @param direccion Dirección de desplazamiento
-     * @param unidades  Unidades a desplazar
-     * @return Si el movimiento relativo es legal, es decir, si el resultado de moverte ciertas unidades en una
-     * dirección está dentro de los límites del laberinto
+     * @param posicion Posición absoluta destino del movimiento
+     * @return Si el movimiento es legal, es decir, es una posición dentro de los límites del laberinto
      */
-    private boolean movRelativoLegal(Direccion direccion, int unidades) {
-        return direccion == Direccion.NORTE && getPosicion().getY() - Math.abs(unidades) >= 0 ||
-                direccion == Direccion.ESTE && getPosicion().getX() + Math.abs(unidades) < Laberinto.recuperarInstancia().getDimension() ||
-                direccion == Direccion.SUR && getPosicion().getY() + Math.abs(unidades) < Laberinto.recuperarInstancia().getDimension() ||
-                direccion == Direccion.OESTE && getPosicion().getX() - Math.abs(unidades) >= 0;
-    }
-
-    /**
-     * @param posicionAbsoluta Posición absoluta destino del movimiento
-     * @return Si el movimiento absoluto es legal, es decir, es una posición dentro de los límites del laberinto
-     */
-    private boolean movAbsolutoLegal(Posicion posicionAbsoluta) {
-        return posicionAbsoluta.getX() >= 0 &&
-                posicionAbsoluta.getX() < Laberinto.recuperarInstancia().getDimension() &&
-                posicionAbsoluta.getY() >= 0 &&
-                posicionAbsoluta.getY() < Laberinto.recuperarInstancia().getDimension();
+    private boolean movimientoLegal(Posicion posicion) {
+        return posicion.getX() >= 0 &&
+                posicion.getX() < Laberinto.recuperarInstancia().getDimension() &&
+                posicion.getY() >= 0 &&
+                posicion.getY() < Laberinto.recuperarInstancia().getDimension();
     }
 
     /**
@@ -115,6 +106,9 @@ public class ControladorMovimiento {
         return posicion;
     }
 
+    /**
+     * @param posicion Nueva posición del controlador
+     */
     private void setPosicion(Posicion posicion) {
         this.posicion = posicion;
     }
