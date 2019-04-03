@@ -28,7 +28,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
         boolean exito;                                      // Resultado de la última iteración. Determina el éxito
         int numIt = 0;                                      // Número de iteración
 
-        setContNodos(0);                                    // Reinicia el número de nodos generados
+        setContNodosGen(0);                                    // Reinicia el número de nodos generados
         // Realiza hasta un cierto número de iteraciones intentando encontrar una solución
         getReloj().start();
         do {
@@ -72,7 +72,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
             Posicion posDestino = seleccionarOperando(nodo);
             // Actualización del umbral. Si no hay posición disponible se actualiza a -1 para detener la iteración
             nuevoUmbral = posDestino != null ? estadoLaberinto.getUmbral() - actualizarUmbral(posDestino) : -1;
-            setContNodos(getContNodos() + 1);               // Incrementa en 1 el número de nodos generados
+            setContNodosGen(getContNodosGen() + 1);               // Incrementa en 1 el número de nodos generados
 
             // Determina si debe seguir la iteración. El nuevo umbral no debe superar el disponible
             if (nuevoUmbral >= 0) {
@@ -156,7 +156,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
         // Imprime tiempo empleado
         System.out.println("Tiempo empleado : " + getReloj().elapsed(TimeUnit.MICROSECONDS) + " " + TimeUnit.MICROSECONDS);
         // Imprime el número de nodos generados en memoria
-        System.out.println("Número de nodos generados : " + getContNodos());
+        System.out.println("Número de nodos generados : " + getContNodosGen());
         // Representación del camino solución
         System.out.println(new Laberinto.Solucionado(sol.getContent().getPosVisitadas(), sol.getContent().getUmbral()));
         // Secuencia de estados. Representación de la expansión

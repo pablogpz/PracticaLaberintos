@@ -13,7 +13,7 @@ public abstract class ExpansorArbol {
     private TreeNode<EstadoLaberinto> arbolDecision;                // Arbol de decisión para modelar la expansión del algoritmo
     private Function<EstadoLaberinto, Integer> heuristica;          // Función heurística a aplicar a los nodos del árbol
 
-    private int contNodos;                                          // Número de nodos generados en memoria
+    private int contNodosGen;                                       // Número de nodos generados en memoria
     private Stopwatch reloj;                                        // Medidor del tiempo de ejecución del algoritmo
 
     /**
@@ -23,7 +23,7 @@ public abstract class ExpansorArbol {
         this.heuristica = heuristica;
         arbolDecision = new TreeNode<>(null, EstadoLaberinto.estadoInicial());
 
-        contNodos = 0;
+        contNodosGen = 0;
         reloj = Stopwatch.createUnstarted();
     }
 
@@ -83,15 +83,15 @@ public abstract class ExpansorArbol {
     /**
      * @return Número de nodos generados en memoria
      */
-    public int getContNodos() {
-        return contNodos;
+    public int getContNodosGen() {
+        return contNodosGen;
     }
 
     /**
-     * @param contNodos Nuevo número de nodos generados en memoria
+     * @param contNodosGen Nuevo número de nodos generados en memoria
      */
-    protected void setContNodos(int contNodos) {
-        this.contNodos = contNodos;
+    protected void setContNodosGen(int contNodosGen) {
+        this.contNodosGen = contNodosGen;
     }
 
     /**
