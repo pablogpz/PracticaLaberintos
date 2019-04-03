@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="org.reflections:reflections:0.9.9-RC2" type="repository">
+    <properties maven-id="org.reflections:reflections:0.9.9-RC2">
+      <exclude>
+        <dependency maven-id="com.google.guava:guava" />
+        <dependency maven-id="com.google.code.findbugs:annotations" />
+        <dependency maven-id="dom4j:dom4j" />
+      </exclude>
+    </properties>
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/reflections-0.9.9-RC2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javassist-3.18.2-GA.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/reflections-0.9.9-RC2-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javassist-3.18.2-GA-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
