@@ -94,9 +94,9 @@ public class ControladorMovimiento {
      */
     private boolean movimientoLegal(Posicion posicion) {
         return posicion.getX() >= 0 &&
-                posicion.getX() < Laberinto.recuperarInstancia().getDimension() &&
+                posicion.getX() < Laberinto.instancia().getDimension() &&
                 posicion.getY() >= 0 &&
-                posicion.getY() < Laberinto.recuperarInstancia().getDimension();
+                posicion.getY() < Laberinto.instancia().getDimension();
     }
 
     /**

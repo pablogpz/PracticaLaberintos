@@ -17,7 +17,9 @@ public class GeneracionYPrueba extends ExpansorArbol {
     }
 
     /**
-     * TODO Describir el algoritmo
+     * Implementa el algoritmo de búsqueda sin información "Generación y Prueba". No emplea ninguna función heurística,
+     * pero ordena los operadores disponibles por coste. El coste de un movimiento es el valor asociado a la casilla
+     * de la posición destino.
      */
     @Override
     public void ejecutar() {
@@ -42,12 +44,11 @@ public class GeneracionYPrueba extends ExpansorArbol {
             // Filtrado del nodo solución, el que no tiene hijos
             TreeNode<EstadoLaberinto> sol = TreeDef.filteredList(collect, nodo -> nodo.getChildren().size() == 0).get(0);
 
-            System.out.println(new Laberinto.Representable(sol.getContent().getPosVisitadas()));
+            System.out.println(new Laberinto.Solucionado(sol.getContent().getPosVisitadas()));
             System.out.println(copiaArbol.toStringDeep());
         } else {
             System.out.println("NO ENCONTRÓ SOLUCIÓN en " + NUM_ITERACIONES + " intentos\nPosiblemente no tenga solución");
         }
-
     }
 
     /**
@@ -60,7 +61,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
         // Variables del estado del laberinto actual
         EstadoLaberinto estadoLaberinto = nodo.getContent();
         List<Posicion> posVisitadas = estadoLaberinto.getPosVisitadas();
-        ControladorMovimiento cMov = estadoLaberinto.getJugador().controladorMovimiento();
+        ControladorMovimiento cMov = estadoLaberinto.getJugador().ctrlMovimiento();
 
         // Variables auxiliares
         Jugador clon;                                       // Copia del jugador para el siguiente nodo del árbol
@@ -68,7 +69,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
         List<Posicion> visitadas;                           // Nueva lista de visitados
 
         // Comprueba si la casilla actual es el objetivo
-        if (!Laberinto.recuperarInstancia().casilla(cMov.getPosicion()).esObjetivo()) {
+        if (!Laberinto.instancia().casilla(cMov.getPosicion()).esObjetivo()) {
             // Selección de operando
             Posicion posDestino = seleccionarOperando(nodo);
             // Actualización del umbral. Si no hay posición disponible se actualiza a -1 para detener la iteración
@@ -78,7 +79,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
             if (nuevoUmbral >= 0) {
                 // El clon realiza el movimiento elegido
                 clon = (Jugador) estadoLaberinto.getJugador().clone();
-                clon.controladorMovimiento().setPosicionAbsoluta(posDestino);
+                clon.ctrlMovimiento().setPosicionAbsoluta(posDestino);
 
                 // Añade la posición de destino a las visitadas
                 visitadas = new ArrayList<>(posVisitadas);
@@ -109,7 +110,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
         // Variables del estado del laberinto actual
         EstadoLaberinto estadoLaberinto = nodo.getContent();
         List<Posicion> posVisitadas = estadoLaberinto.getPosVisitadas();
-        ControladorMovimiento cMov = estadoLaberinto.getJugador().controladorMovimiento();
+        ControladorMovimiento cMov = estadoLaberinto.getJugador().ctrlMovimiento();
 
         Posicion posDestino = null;
 
@@ -121,7 +122,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
                 .stream()
                 .map(cMov::aplicarMovimiento)
                 .filter(posicion -> !posVisitadas.contains(posicion))
-                .sorted(Comparator.comparingInt(p -> Laberinto.recuperarInstancia().casilla(p).getValor()))
+                .sorted(Comparator.comparingInt(p -> Laberinto.instancia().casilla(p).getValor()))
                 .collect(Collectors.toList());
 
         // Comprueba si no se ha encerrado a sí mismo. Sino calcula la siguiente posición
@@ -140,6 +141,16 @@ public class GeneracionYPrueba extends ExpansorArbol {
 
         return posDestino;
 
+    }
+
+    /**
+     * @return Imposible
+     * @throws UnsupportedOperationException El algoritmo de Generación Y Prueba no emplea ninguna heurística
+     */
+    @Override
+    protected int aplicarHeuristica(TreeNode<EstadoLaberinto> nodo) {
+        throw new UnsupportedOperationException("El algoritmo \"" + getClass().getName() +
+                "\" no utiliza funciones heurísticas");
     }
 
     /**

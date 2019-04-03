@@ -16,7 +16,7 @@ public class CasillaParser {
     private int umbral;                     // Umbral asociado al laberinto
 
     public CasillaParser() {
-        laberinto = new Casilla[Laberinto.recuperarInstancia().getDimension()][Laberinto.recuperarInstancia().getDimension()];
+        laberinto = new Casilla[Laberinto.instancia().getDimension()][Laberinto.instancia().getDimension()];
     }
 
     /**
@@ -31,9 +31,9 @@ public class CasillaParser {
             // Lectura de la primera línea: umbral
             setUmbral(Integer.parseInt(scanner.nextLine()));
             // Lectura del resto de líneas: valores separados por comas
-            for (int y = 0; y < Laberinto.recuperarInstancia().getDimension(); y++) {
+            for (int y = 0; y < Laberinto.instancia().getDimension(); y++) {
                 valores = scanner.nextLine().split(",");
-                for (int x = 0; x < Laberinto.recuperarInstancia().getDimension(); x++) {
+                for (int x = 0; x < Laberinto.instancia().getDimension(); x++) {
                     Casilla casilla = new Casilla(Integer.parseInt(valores[x]));
 
                     laberinto[y][x] = casilla;
@@ -62,17 +62,17 @@ public class CasillaParser {
     }
 
     /**
-     * @return Umbral asociado al laberinto parseado
-     */
-    public int getUmbral() {
-        return umbral;
-    }
-
-    /**
      * @param posObjetivo Nueva posición de la casilla objetivo
      */
     private void setPosObjetivo(Posicion posObjetivo) {
         this.posObjetivo = posObjetivo;
+    }
+
+    /**
+     * @return Umbral asociado al laberinto parseado
+     */
+    public int getUmbral() {
+        return umbral;
     }
 
     /**

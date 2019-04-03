@@ -9,10 +9,9 @@ public class Laberinto {
     private static final int DEF_DIEMNSION = 10;        // Dimensión por defecto del laberinto
 
     private static Laberinto instancia;                 // Instancia Singleton del laberinto
-
+    private final int dimension;                        // Dimensión del laberinto
     private Casilla[][] laberinto;                      // Matriz de casillas que representa un tablero
     private Posicion posObjetivc;                       // Posición de la casilla objetivo
-    private final int dimension;                        // Dimensión del laberinto
     private int umbral;                                 // Umbral asociado al laberinto
 
     /**
@@ -21,6 +20,16 @@ public class Laberinto {
     private Laberinto(int dimension) {
         laberinto = new Casilla[dimension][dimension];
         this.dimension = dimension;
+    }
+
+    /**
+     * @return Instancia Singleton del laberinto
+     */
+    public static Laberinto instancia() {
+        if (instancia == null)
+            instancia = new Laberinto(DEF_DIEMNSION);
+
+        return instancia;
     }
 
     /**
@@ -71,20 +80,17 @@ public class Laberinto {
     }
 
     /**
-     * @return Instancia Singleton del laberinto
-     */
-    public static Laberinto recuperarInstancia() {
-        if (instancia == null)
-            instancia = new Laberinto(DEF_DIEMNSION);
-
-        return instancia;
-    }
-
-    /**
      * @return Posición de la casilla objetivo
      */
     public Posicion getPosObjetivc() {
         return posObjetivc;
+    }
+
+    /**
+     * @param posObjetivc Posición de la celda objetivo
+     */
+    public void setPosObjetivc(Posicion posObjetivc) {
+        this.posObjetivc = posObjetivc;
     }
 
     /**
@@ -102,13 +108,6 @@ public class Laberinto {
     }
 
     /**
-     * @param posObjetivc Posición de la celda objetivo
-     */
-    public void setPosObjetivc(Posicion posObjetivc) {
-        this.posObjetivc = posObjetivc;
-    }
-
-    /**
      * @param umbral Nuevo valor del umbral
      */
     public void setUmbral(int umbral) {
@@ -118,19 +117,19 @@ public class Laberinto {
     /**
      * Clase para representar soluciones al laberinto como un camino en el laberinto
      */
-    public static final class Representable extends Laberinto {
+    public static final class Solucionado extends Laberinto {
 
         /**
          * Inicializa un laberinto con las posiciones que conforman la solución al problema
          *
          * @param posiciones Colección de posiciones que conforman la solución al problema
          */
-        public Representable(List<Posicion> posiciones) {
-            super(Laberinto.recuperarInstancia().getDimension());
+        public Solucionado(List<Posicion> posiciones) {
+            super(Laberinto.instancia().getDimension());
 
-            setPosObjetivc(Laberinto.recuperarInstancia().getPosObjetivc());
+            setPosObjetivc(Laberinto.instancia().getPosObjetivc());
             posiciones.forEach(posicion -> super.insertarCasilla
-                    (Laberinto.recuperarInstancia().casilla(posicion), posicion));
+                    (Laberinto.instancia().casilla(posicion), posicion));
         }
 
     }

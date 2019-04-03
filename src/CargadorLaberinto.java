@@ -29,15 +29,26 @@ public class CargadorLaberinto {
     }
 
     /**
+     * Comprueba si un fichero es un fichero válido de laberinto
+     *
+     * @param dir  Objeto {@code File} que representa al fichero
+     * @param name Nombre del fichero
+     * @return Si es un fichero de laberinto válido
+     */
+    private static boolean ficheroValido(File dir, String name) {
+        return name.matches("\\w+.lab$");
+    }
+
+    /**
      * Carga el siguiente fichero de laberinto
      */
     public void cargarSiguienteLaberinto() {
         // Parsea el siguiente fichero
         parser.parsearFichero(itFichLaberintos.next());
         // Carga el laberinto parseado
-        Laberinto.recuperarInstancia().cargarLaberinto(parser.getLaberinto());
-        Laberinto.recuperarInstancia().setUmbral(parser.getUmbral());
-        Laberinto.recuperarInstancia().setPosObjetivc(parser.getPosObjetivo());
+        Laberinto.instancia().cargarLaberinto(parser.getLaberinto());
+        Laberinto.instancia().setUmbral(parser.getUmbral());
+        Laberinto.instancia().setPosObjetivc(parser.getPosObjetivo());
     }
 
     /**
@@ -57,17 +68,6 @@ public class CargadorLaberinto {
         } else {
             throw new FileNotFoundException("La ruta: \"" + carpetaLaberintos + "\" no es un directorio");
         }
-    }
-
-    /**
-     * Comprueba si un fichero es un fichero válido de laberinto
-     *
-     * @param dir  Objeto {@code File} que representa al fichero
-     * @param name Nombre del fichero
-     * @return Si es un fichero de laberinto válido
-     */
-    private static boolean ficheroValido(File dir, String name) {
-        return name.matches("\\w+.lab$");
     }
 
     /**

@@ -31,9 +31,9 @@ public class EstadoLaberinto {
         // Nuevo jugador
         Jugador jugador = new Jugador();
         // Añade la posición inicial a las visitadas
-        List<Posicion> posVisitadas = new ArrayList<>(Collections.singletonList(jugador.controladorMovimiento().getPosicion()));
+        List<Posicion> posVisitadas = new ArrayList<>(Collections.singletonList(jugador.ctrlMovimiento().getPosicion()));
 
-        return new EstadoLaberinto(jugador, posVisitadas, Laberinto.recuperarInstancia().getUmbral());
+        return new EstadoLaberinto(jugador, posVisitadas, Laberinto.instancia().getUmbral());
     }
 
     /**

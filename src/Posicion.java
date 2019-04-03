@@ -31,17 +31,17 @@ public class Posicion {
     }
 
     /**
-     * @return Valor en el eje Y
-     */
-    public int getY() {
-        return y;
-    }
-
-    /**
      * @param x Nuevo valor en el eje X
      */
     public void setX(int x) {
         this.x = x;
+    }
+
+    /**
+     * @return Valor en el eje Y
+     */
+    public int getY() {
+        return y;
     }
 
     /**

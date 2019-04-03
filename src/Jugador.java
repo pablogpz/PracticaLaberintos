@@ -10,13 +10,13 @@ public class Jugador implements Cloneable {
     }
 
     public Jugador(Jugador jugador) {
-        movimiento = new ControladorMovimiento(jugador.controladorMovimiento().getPosicion());
+        movimiento = new ControladorMovimiento(jugador.ctrlMovimiento().getPosicion());
     }
 
     /**
      * @return Controlador de movimiento asociado al jugador
      */
-    public ControladorMovimiento controladorMovimiento() {
+    public ControladorMovimiento ctrlMovimiento() {
         return movimiento;
     }
 
@@ -27,6 +27,6 @@ public class Jugador implements Cloneable {
 
     @Override
     public String toString() {
-        return "Jugador :\n\tPosición : " + controladorMovimiento().getPosicion();
+        return "Jugador :\n\tPosición : " + ctrlMovimiento().getPosicion();
     }
 }

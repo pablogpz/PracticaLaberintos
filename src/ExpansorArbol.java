@@ -34,11 +34,21 @@ public abstract class ExpansorArbol {
     protected abstract Posicion seleccionarOperando(TreeNode<EstadoLaberinto> nodo);
 
     /**
+     * Aplica la función heurística al nodo suministrado
+     *
+     * @param nodo Nodo a evaluar
+     * @return Resultado de la función heurística de evaluación
+     */
+    protected int aplicarHeuristica(TreeNode<EstadoLaberinto> nodo) {
+        return getHeuristica().apply(nodo.getContent());
+    }
+
+    /**
      * @param posicionDestino Posición de destino
      * @return Coste sobre el umbral asociado a la posición de destino
      */
     protected int actualizarUmbral(Posicion posicionDestino) {
-        return Laberinto.recuperarInstancia().casilla(posicionDestino).getValor();
+        return Laberinto.instancia().casilla(posicionDestino).getValor();
     }
 
     /**

@@ -23,7 +23,7 @@ public class Simulador {
         //noinspection ConstantConditions
         for (int i = 0; i < cargador.getCarpetaLaberintos().listFiles().length - 1; i++) {
             Objects.requireNonNull(cargador).cargarSiguienteLaberinto();
-            System.out.println(Laberinto.recuperarInstancia());
+            System.out.println(Laberinto.instancia());
 
             generacionYPrueba.ejecutar();
         }
