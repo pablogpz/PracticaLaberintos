@@ -59,7 +59,8 @@ public abstract class ExpansorArbol {
     }
 
     /**
-     * Interpreta y representa la solución al algoritmo. El algoritmo debe haber hallado una solución
+     * Interpreta y representa la solución al algoritmo. El algoritmo debe haber hallado una solución.
+     * Incluye la representación de la solución, el tiempo empleado y el número de nodos generados
      *
      * @param arbolDecision Árbol de decicisón que contiene la solución
      */

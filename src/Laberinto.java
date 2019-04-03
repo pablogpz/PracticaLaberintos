@@ -122,11 +122,13 @@ public class Laberinto {
         /**
          * Inicializa un laberinto con las posiciones que conforman la solución al problema
          *
-         * @param posiciones Colección de posiciones que conforman la solución al problema
+         * @param posiciones     Colección de posiciones que conforman la solución al problema
+         * @param umbralRestante Umbral restante de la solución
          */
-        public Solucionado(List<Posicion> posiciones) {
+        public Solucionado(List<Posicion> posiciones, int umbralRestante) {
             super(Laberinto.instancia().getDimension());
 
+            setUmbral(umbralRestante);
             setPosObjetivc(Laberinto.instancia().getPosObjetivc());
             posiciones.forEach(posicion -> super.insertarCasilla
                     (Laberinto.instancia().casilla(posicion), posicion));

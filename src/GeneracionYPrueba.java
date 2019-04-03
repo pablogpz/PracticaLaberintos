@@ -43,7 +43,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
             System.out.println("ÉXITO en " + numIt + " intentos");
             mostrarSolucion(copiaArbol);
         } else {
-            System.out.println("NO ENCONTRÓ SOLUCIÓN en " + NUM_ITERACIONES + " intentos\nPosiblemente no tenga solución");
+            System.out.println("NO ENCONTRÓ SOLUCIÓN en " + NUM_ITERACIONES + " intentos\nPosiblemente no tenga solución\n");
         }
 
         getReloj().reset();                                 // Reinicia el reloj
@@ -158,9 +158,9 @@ public class GeneracionYPrueba extends ExpansorArbol {
         // Imprime el número de nodos generados en memoria
         System.out.println("Número de nodos generados : " + getContNodos());
         // Representación del camino solución
-        System.out.println(new Laberinto.Solucionado(sol.getContent().getPosVisitadas()));
+        System.out.println(new Laberinto.Solucionado(sol.getContent().getPosVisitadas(), sol.getContent().getUmbral()));
         // Secuencia de estados. Representación de la expansión
-        System.out.println(arbolDecision.toStringDeep());
+        System.out.println(arbolDecision.toStringDeep() + "\n");
     }
 
     /**
