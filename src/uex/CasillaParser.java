@@ -1,3 +1,5 @@
+package uex;
+
 import java.io.File;
 import java.util.Objects;
 import java.util.Scanner;

@@ -1,3 +1,5 @@
+package uex;
+
 import java.util.function.BiFunction;
 
 /**

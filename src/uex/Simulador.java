@@ -1,3 +1,5 @@
+package uex;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -7,7 +9,7 @@ public class Simulador {
         // TESTING ->
 
         CargadorLaberinto cargador = null;
-        ExpansorArbol generacionYPrueba = new GeneracionYPrueba();
+        ExpansorArbol generacionYPrueba = new GeneracionYPrueba(null);
 
         try {
             cargador = new CargadorLaberinto(new File("res/laberintos"), new CasillaParser());

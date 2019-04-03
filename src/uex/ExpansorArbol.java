@@ -1,7 +1,8 @@
+package uex;
+
 import com.diffplug.common.base.TreeNode;
 import com.google.common.base.Stopwatch;
-
-import java.util.function.Function;
+import uex.heuristicas.Heuristica;
 
 /**
  * Clase que modela un esquema algorítmo para manipular el laberinto. Se basa en un arbol de decisiones formado por
@@ -11,7 +12,7 @@ import java.util.function.Function;
 public abstract class ExpansorArbol {
 
     private TreeNode<EstadoLaberinto> arbolDecision;                // Arbol de decisión para modelar la expansión del algoritmo
-    private Function<EstadoLaberinto, Integer> heuristica;          // Función heurística a aplicar a los nodos del árbol
+    private Heuristica heuristica;                                  // Función heurística a aplicar a los nodos del árbol
 
     private int contNodosGen;                                       // Número de nodos generados en memoria
     private Stopwatch reloj;                                        // Medidor del tiempo de ejecución del algoritmo
@@ -19,7 +20,7 @@ public abstract class ExpansorArbol {
     /**
      * @param heuristica Función heurística a aplicar a los nodos del árbol
      */
-    public ExpansorArbol(Function<EstadoLaberinto, Integer> heuristica) {
+    public ExpansorArbol(Heuristica heuristica) {
         this.heuristica = heuristica;
         arbolDecision = new TreeNode<>(null, EstadoLaberinto.estadoInicial());
 
@@ -46,7 +47,7 @@ public abstract class ExpansorArbol {
      * @param nodo Nodo a evaluar
      * @return Resultado de la función heurística de evaluación
      */
-    protected int aplicarHeuristica(TreeNode<EstadoLaberinto> nodo) {
+    protected Number aplicarHeuristica(TreeNode<EstadoLaberinto> nodo) {
         return getHeuristica().apply(nodo.getContent());
     }
 
@@ -69,7 +70,7 @@ public abstract class ExpansorArbol {
     /**
      * @return Función heurística a aplicar a los nodos del árbol
      */
-    protected Function<EstadoLaberinto, Integer> getHeuristica() {
+    protected Heuristica getHeuristica() {
         return heuristica;
     }
 
@@ -104,7 +105,7 @@ public abstract class ExpansorArbol {
     /**
      * @param heuristica Nueva función heurística
      */
-    protected void setHeuristica(Function<EstadoLaberinto, Integer> heuristica) {
+    protected void setHeuristica(Heuristica heuristica) {
         this.heuristica = heuristica;
     }
 }

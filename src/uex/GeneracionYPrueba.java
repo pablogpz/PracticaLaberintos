@@ -1,19 +1,24 @@
+package uex;
+
 import com.diffplug.common.base.TreeDef;
 import com.diffplug.common.base.TreeNode;
 import com.diffplug.common.base.TreeStream;
+import uex.heuristicas.Heuristica;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class GeneracionYPrueba extends ExpansorArbol {
 
     private static final int NUM_ITERACIONES = 25;          // Número máximo de intentos
 
-    public GeneracionYPrueba() {
+    /**
+     * @param heuristica Es ignorada. El algoritmo no lo emplea
+     */
+    public GeneracionYPrueba(Heuristica heuristica) {
         super(null);
     }
 
@@ -28,7 +33,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
         boolean exito;                                      // Resultado de la última iteración. Determina el éxito
         int numIt = 0;                                      // Número de iteración
 
-        setContNodosGen(0);                                    // Reinicia el número de nodos generados
+        setContNodosGen(0);                                 // Reinicia el número de nodos generados
         // Realiza hasta un cierto número de iteraciones intentando encontrar una solución
         getReloj().start();
         do {
@@ -168,7 +173,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
      * @throws UnsupportedOperationException El algoritmo de Generación Y Prueba no emplea ninguna heurística
      */
     @Override
-    protected int aplicarHeuristica(TreeNode<EstadoLaberinto> nodo) {
+    protected Number aplicarHeuristica(TreeNode<EstadoLaberinto> nodo) {
         throw new UnsupportedOperationException("El algoritmo \"" + getClass().getName() +
                 "\" no utiliza funciones heurísticas");
     }
@@ -178,7 +183,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
      * @throws UnsupportedOperationException El algoritmo de Generación Y Prueba no emplea ninguna heurística
      */
     @Override
-    protected Function<EstadoLaberinto, Integer> getHeuristica() {
+    protected Heuristica getHeuristica() {
         throw new UnsupportedOperationException("El algoritmo \"" + getClass().getName() +
                 "\" no utiliza funciones heurísticas");
     }

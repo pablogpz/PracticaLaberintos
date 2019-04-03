@@ -1,3 +1,5 @@
+package uex;
+
 /**
  * Un tipo de movimiento que siempre tiene como desplazamiento la unidad (1)
  */

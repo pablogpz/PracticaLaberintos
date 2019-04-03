@@ -1,3 +1,5 @@
+package uex;
+
 public enum Direccion {
     NORTE,
     ESTE,

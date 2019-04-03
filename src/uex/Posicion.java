@@ -1,3 +1,5 @@
+package uex;
+
 /**
  * Clase encargada de modelar las distintas posiciones en laberinto siguiendo unos ejes cartesianos XY
  */
@@ -21,6 +23,17 @@ public class Posicion {
     public Posicion(Posicion posicion) {
         x = posicion.getX();
         y = posicion.getY();
+    }
+
+    /**
+     * Calcula la distancia en línea recta entre dos posiciones
+     *
+     * @param posicionDestino Posición de destino
+     * @return Distancia a la posición destino en línea recta
+     */
+    public double distanciaA(Posicion posicionDestino) {
+        return Math.sqrt(Math.pow((posicionDestino.getX() - getX()), 2) +
+                Math.pow(posicionDestino.getY() - getY(), 2));
     }
 
     /**

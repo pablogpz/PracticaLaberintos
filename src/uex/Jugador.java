@@ -1,3 +1,5 @@
+package uex;
+
 /**
  * Clase encargada de modelar el comportamiento de un jugador sobre el tablero
  */
