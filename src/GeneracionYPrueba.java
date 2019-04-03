@@ -5,6 +5,7 @@ import com.diffplug.common.base.TreeStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -22,42 +23,39 @@ public class GeneracionYPrueba extends ExpansorArbol {
      * de la posición destino.
      */
     @Override
-    public void ejecutar() {
+    public void resolver() {
         TreeNode<EstadoLaberinto> copiaArbol;               // Copia del padre para cada iteración del algoritmo
-        boolean resultado;                                  // Resultado de la última iteración. Determina el éxito
+        boolean exito;                                      // Resultado de la última iteración. Determina el éxito
         int numIt = 0;                                      // Número de iteración
 
+        setContNodos(0);                                    // Reinicia el número de nodos generados
         // Realiza hasta un cierto número de iteraciones intentando encontrar una solución
+        getReloj().start();
         do {
             copiaArbol = getArbolDecision().copy();
-            resultado = ejecutar(copiaArbol);
+            exito = resolver(copiaArbol);
             numIt++;
-        } while (!resultado && numIt < NUM_ITERACIONES);
+        } while (!exito && numIt < NUM_ITERACIONES);
+        getReloj().stop();
 
         // Comprueba si se encontró solución o si se agotaron las iteraciones disponibles
-        if (resultado) {
+        if (exito) {
             System.out.println("ÉXITO en " + numIt + " intentos");
-
-            // Lista de nodos del árbol
-            List<TreeNode<EstadoLaberinto>> collect = TreeStream.depthFirst(TreeNode.treeDef(), copiaArbol)
-                    .collect(Collectors.toList());
-            // Filtrado del nodo solución, el que no tiene hijos
-            TreeNode<EstadoLaberinto> sol = TreeDef.filteredList(collect, nodo -> nodo.getChildren().size() == 0).get(0);
-
-            System.out.println(new Laberinto.Solucionado(sol.getContent().getPosVisitadas()));
-            System.out.println(copiaArbol.toStringDeep());
+            mostrarSolucion(copiaArbol);
         } else {
             System.out.println("NO ENCONTRÓ SOLUCIÓN en " + NUM_ITERACIONES + " intentos\nPosiblemente no tenga solución");
         }
+
+        getReloj().reset();                                 // Reinicia el reloj
     }
 
     /**
-     * Función sumergida del método {@link GeneracionYPrueba#ejecutar()}
+     * Función sumergida del método {@link GeneracionYPrueba#resolver()}
      *
      * @param nodo Árbol de decisión de entrada
      * @return Si la iteración encontró una solución
      */
-    private boolean ejecutar(TreeNode<EstadoLaberinto> nodo) {
+    private boolean resolver(TreeNode<EstadoLaberinto> nodo) {
         // Variables del estado del laberinto actual
         EstadoLaberinto estadoLaberinto = nodo.getContent();
         List<Posicion> posVisitadas = estadoLaberinto.getPosVisitadas();
@@ -74,6 +72,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
             Posicion posDestino = seleccionarOperando(nodo);
             // Actualización del umbral. Si no hay posición disponible se actualiza a -1 para detener la iteración
             nuevoUmbral = posDestino != null ? estadoLaberinto.getUmbral() - actualizarUmbral(posDestino) : -1;
+            setContNodos(getContNodos() + 1);               // Incrementa en 1 el número de nodos generados
 
             // Determina si debe seguir la iteración. El nuevo umbral no debe superar el disponible
             if (nuevoUmbral >= 0) {
@@ -85,7 +84,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
                 visitadas = new ArrayList<>(posVisitadas);
                 visitadas.add(posDestino);
 
-                return ejecutar(new TreeNode<>(nodo, new EstadoLaberinto(clon, visitadas, nuevoUmbral)));
+                return resolver(new TreeNode<>(nodo, new EstadoLaberinto(clon, visitadas, nuevoUmbral)));
             } else return false;
         } else {
             return true;
@@ -141,6 +140,27 @@ public class GeneracionYPrueba extends ExpansorArbol {
 
         return posDestino;
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void mostrarSolucion(TreeNode<EstadoLaberinto> arbolDecision) {
+        // Lista de nodos del árbol
+        List<TreeNode<EstadoLaberinto>> collect = TreeStream.depthFirst(TreeNode.treeDef(), arbolDecision)
+                .collect(Collectors.toList());
+        // Filtrado del nodo solución, el que no tiene hijos
+        TreeNode<EstadoLaberinto> sol = TreeDef.filteredList(collect, nodo -> nodo.getChildren().size() == 0).get(0);
+
+        // Imprime tiempo empleado
+        System.out.println("Tiempo empleado : " + getReloj().elapsed(TimeUnit.MICROSECONDS) + " " + TimeUnit.MICROSECONDS);
+        // Imprime el número de nodos generados en memoria
+        System.out.println("Número de nodos generados : " + getContNodos());
+        // Representación del camino solución
+        System.out.println(new Laberinto.Solucionado(sol.getContent().getPosVisitadas()));
+        // Secuencia de estados. Representación de la expansión
+        System.out.println(arbolDecision.toStringDeep());
     }
 
     /**

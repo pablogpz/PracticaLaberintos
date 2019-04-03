@@ -25,7 +25,7 @@ public class Simulador {
             Objects.requireNonNull(cargador).cargarSiguienteLaberinto();
             System.out.println(Laberinto.instancia());
 
-            generacionYPrueba.ejecutar();
+            generacionYPrueba.resolver();
         }
 
         // <- TESTING

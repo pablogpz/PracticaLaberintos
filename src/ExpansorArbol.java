@@ -1,4 +1,5 @@
 import com.diffplug.common.base.TreeNode;
+import com.google.common.base.Stopwatch;
 
 import java.util.function.Function;
 
@@ -12,18 +13,24 @@ public abstract class ExpansorArbol {
     private TreeNode<EstadoLaberinto> arbolDecision;                // Arbol de decisión para modelar la expansión del algoritmo
     private Function<EstadoLaberinto, Integer> heuristica;          // Función heurística a aplicar a los nodos del árbol
 
+    private int contNodos;                                          // Número de nodos generados en memoria
+    private Stopwatch reloj;                                        // Medidor del tiempo de ejecución del algoritmo
+
     /**
      * @param heuristica Función heurística a aplicar a los nodos del árbol
      */
     public ExpansorArbol(Function<EstadoLaberinto, Integer> heuristica) {
         this.heuristica = heuristica;
         arbolDecision = new TreeNode<>(null, EstadoLaberinto.estadoInicial());
+
+        contNodos = 0;
+        reloj = Stopwatch.createUnstarted();
     }
 
     /**
      * Ejecuta el esquema algorítmico
      */
-    public abstract void ejecutar();
+    public abstract void resolver();
 
     /**
      * Implementa la lógica de selección de operando para el árbol de decisión dado en el contexto apropiado
@@ -52,6 +59,13 @@ public abstract class ExpansorArbol {
     }
 
     /**
+     * Interpreta y representa la solución al algoritmo. El algoritmo debe haber hallado una solución
+     *
+     * @param arbolDecision Árbol de decicisón que contiene la solución
+     */
+    protected abstract void mostrarSolucion(TreeNode<EstadoLaberinto> arbolDecision);
+
+    /**
      * @return Función heurística a aplicar a los nodos del árbol
      */
     protected Function<EstadoLaberinto, Integer> getHeuristica() {
@@ -59,16 +73,37 @@ public abstract class ExpansorArbol {
     }
 
     /**
-     * @param heuristica Nueva función heurística
-     */
-    protected void setHeuristica(Function<EstadoLaberinto, Integer> heuristica) {
-        this.heuristica = heuristica;
-    }
-
-    /**
      * @return Arbol de decisión para modelar la expansión del algoritmo
      */
     protected TreeNode<EstadoLaberinto> getArbolDecision() {
         return arbolDecision;
+    }
+
+    /**
+     * @return Número de nodos generados en memoria
+     */
+    public int getContNodos() {
+        return contNodos;
+    }
+
+    /**
+     * @param contNodos Nuevo número de nodos generados en memoria
+     */
+    protected void setContNodos(int contNodos) {
+        this.contNodos = contNodos;
+    }
+
+    /**
+     * @return Medidor empleado para medir el tiempo de ejecución del algoritmo
+     */
+    public Stopwatch getReloj() {
+        return reloj;
+    }
+
+    /**
+     * @param heuristica Nueva función heurística
+     */
+    protected void setHeuristica(Function<EstadoLaberinto, Integer> heuristica) {
+        this.heuristica = heuristica;
     }
 }
