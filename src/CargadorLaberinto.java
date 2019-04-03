@@ -41,14 +41,22 @@ public class CargadorLaberinto {
 
     /**
      * Carga el siguiente fichero de laberinto
+     *
+     * @return Si hay otro fichero de laberinto par ser cargado
      */
-    public void cargarSiguienteLaberinto() {
-        // Parsea el siguiente fichero
-        parser.parsearFichero(itFichLaberintos.next());
-        // Carga el laberinto parseado
-        Laberinto.instancia().cargarLaberinto(parser.getLaberinto());
-        Laberinto.instancia().setUmbral(parser.getUmbral());
-        Laberinto.instancia().setPosObjetivc(parser.getPosObjetivo());
+    public boolean cargarSiguienteLaberinto() {
+        boolean hayMasFicheros = itFichLaberintos.hasNext();
+
+        if (hayMasFicheros) {
+            // Parsea el siguiente fichero
+            parser.parsearFichero(itFichLaberintos.next());
+            // Carga el laberinto parseado
+            Laberinto.instancia().cargarLaberinto(parser.getLaberinto());
+            Laberinto.instancia().setUmbral(parser.getUmbral());
+            Laberinto.instancia().setPosObjetivc(parser.getPosObjetivo());
+        }
+
+        return hayMasFicheros;
     }
 
     /**
