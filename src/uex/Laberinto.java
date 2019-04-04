@@ -1,5 +1,7 @@
 package uex;
 
+import uex.movimiento.Posicion;
+
 import java.util.List;
 
 /**

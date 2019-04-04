@@ -1,4 +1,4 @@
-package uex;
+package uex.movimiento;
 
 /**
  * Clase encargada de modelar las distintas posiciones en laberinto siguiendo unos ejes cartesianos XY

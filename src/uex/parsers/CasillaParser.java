@@ -1,4 +1,8 @@
-package uex;
+package uex.parsers;
+
+import uex.Casilla;
+import uex.Laberinto;
+import uex.movimiento.Posicion;
 
 import java.io.File;
 import java.util.Objects;

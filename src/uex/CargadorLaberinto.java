@@ -1,5 +1,7 @@
 package uex;
 
+import uex.parsers.CasillaParser;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;

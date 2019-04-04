@@ -1,6 +1,6 @@
 package uex.heuristicas;
 
-import uex.EstadoLaberinto;
+import uex.algoritmos.EstadoLaberinto;
 
 import java.util.function.Function;
 

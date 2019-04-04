@@ -1,4 +1,4 @@
-package uex;
+package uex.movimiento;
 
 import java.util.function.BiFunction;
 

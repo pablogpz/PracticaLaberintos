@@ -1,8 +1,8 @@
 package uex.heuristicas;
 
-import uex.EstadoLaberinto;
 import uex.Laberinto;
-import uex.Posicion;
+import uex.algoritmos.EstadoLaberinto;
+import uex.movimiento.Posicion;
 
 /**
  * Heurística : Distancia a la casilla destino desde la casilla actual en línea recta.

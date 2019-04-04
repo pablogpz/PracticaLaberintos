@@ -1,9 +1,13 @@
-package uex;
+package uex.algoritmos;
 
 import com.diffplug.common.base.TreeDef;
 import com.diffplug.common.base.TreeNode;
 import com.diffplug.common.base.TreeStream;
+import uex.Jugador;
+import uex.Laberinto;
 import uex.heuristicas.Heuristica;
+import uex.movimiento.ControladorMovimiento;
+import uex.movimiento.Posicion;
 
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -1,4 +1,6 @@
-package uex;
+package uex.movimiento;
+
+import uex.Laberinto;
 
 import java.util.ArrayList;
 import java.util.EnumSet;

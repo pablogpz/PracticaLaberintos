@@ -1,4 +1,4 @@
-package uex;
+package uex.movimiento;
 
 /**
  * Un tipo de movimiento que siempre tiene como desplazamiento la unidad (1)

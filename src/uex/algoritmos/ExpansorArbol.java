@@ -1,8 +1,10 @@
-package uex;
+package uex.algoritmos;
 
 import com.diffplug.common.base.TreeNode;
 import com.google.common.base.Stopwatch;
+import uex.Laberinto;
 import uex.heuristicas.Heuristica;
+import uex.movimiento.Posicion;
 
 /**
  * Clase que modela un esquema algorítmo para manipular el laberinto. Se basa en un arbol de decisiones formado por
@@ -75,6 +77,13 @@ public abstract class ExpansorArbol {
     }
 
     /**
+     * @param heuristica Nueva función heurística
+     */
+    protected void setHeuristica(Heuristica heuristica) {
+        this.heuristica = heuristica;
+    }
+
+    /**
      * @return Arbol de decisión para modelar la expansión del algoritmo
      */
     protected TreeNode<EstadoLaberinto> getArbolDecision() {
@@ -100,12 +109,5 @@ public abstract class ExpansorArbol {
      */
     public Stopwatch getReloj() {
         return reloj;
-    }
-
-    /**
-     * @param heuristica Nueva función heurística
-     */
-    protected void setHeuristica(Heuristica heuristica) {
-        this.heuristica = heuristica;
     }
 }

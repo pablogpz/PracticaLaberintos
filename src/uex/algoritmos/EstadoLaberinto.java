@@ -1,4 +1,8 @@
-package uex;
+package uex.algoritmos;
+
+import uex.Jugador;
+import uex.Laberinto;
+import uex.movimiento.Posicion;
 
 import java.util.ArrayList;
 import java.util.Collections;

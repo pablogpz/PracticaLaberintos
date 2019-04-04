@@ -1,5 +1,9 @@
 package uex;
 
+import uex.algoritmos.ExpansorArbol;
+import uex.algoritmos.GeneracionYPrueba;
+import uex.parsers.CasillaParser;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
