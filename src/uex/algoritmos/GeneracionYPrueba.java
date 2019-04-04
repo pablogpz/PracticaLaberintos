@@ -18,18 +18,26 @@ import java.util.stream.Collectors;
 public class GeneracionYPrueba extends ExpansorArbol {
 
     private static final int NUM_ITERACIONES = 25;          // Número máximo de intentos
+    private final int NUM_MOV_FIN;                          // Número de movimientos hasta la prueba heurística
+    private final int UMBRAL_HEURISTICO;                    // Umbral para determinar si merece la pena seguir con la iteración
+
+    private int numMov;                                     // Número de movimientos dados por el algoritmo en un momento dado
 
     /**
-     * @param heuristica Es ignorada. El algoritmo no lo emplea
+     * @param heuristica Heurística a emplear
      */
     public GeneracionYPrueba(Heuristica heuristica) {
-        super(null);
+        super(heuristica);
+
+        // Ponderado en lo que consume de media el algoritmo en costes cuando ha realizado la mitad de los pasos medios
+        NUM_MOV_FIN = (Laberinto.instancia().getUmbral() / 2) / 5;
+        // Ponderado en los pasos que da de media en algoritmo hasta llegar al cuadrante de la posición objetivo
+        UMBRAL_HEURISTICO = Laberinto.instancia().getDimension() / 2;
     }
 
     /**
-     * Implementa el algoritmo de búsqueda sin información "Generación y Prueba". No emplea ninguna función heurística,
-     * pero ordena los operadores disponibles por coste. El coste de un movimiento es el valor asociado a la casilla
-     * de la posición destino.
+     * Implementa el algoritmo de búsqueda con información "Generación y Prueba". Ordena los operadores disponibles
+     * por coste. El coste de un movimiento es el valor asociado a la casilla de la posición destino.
      */
     @Override
     public void resolver() {
@@ -38,6 +46,8 @@ public class GeneracionYPrueba extends ExpansorArbol {
         int numIt = 0;                                      // Número de iteración
 
         setContNodosGen(0);                                 // Reinicia el número de nodos generados
+        setNumMov(0);                                       // Reinicia el número de movimientos realizados
+
         // Realiza hasta un cierto número de iteraciones intentando encontrar una solución
         getReloj().start();
         do {
@@ -80,11 +90,14 @@ public class GeneracionYPrueba extends ExpansorArbol {
             // Selección de operando
             Posicion posDestino = seleccionarOperando(nodo);
             // Actualización del umbral. Si no hay posición disponible se actualiza a -1 para detener la iteración
-            nuevoUmbral = posDestino != null ? estadoLaberinto.getUmbral() - actualizarUmbral(posDestino) : -1;
-            setContNodosGen(getContNodosGen() + 1);               // Incrementa en 1 el número de nodos generados
+            nuevoUmbral = estadoLaberinto.getUmbral() - actualizarUmbral(posDestino);
+            setContNodosGen(getContNodosGen() + 1);         // Incrementa en 1 el número de nodos generados
 
-            // Determina si debe seguir la iteración. El nuevo umbral no debe superar el disponible
+            // Determina si el nuevo umbral no supera el disponible
             if (nuevoUmbral >= 0) {
+                // Comrprobación heurística de si merece la pena seguir evaluando esta iteración
+                if (!pruebaHeuristica(nodo)) return false;
+
                 // El clon realiza el movimiento elegido
                 clon = (Jugador) estadoLaberinto.getJugador().clone();
                 clon.ctrlMovimiento().setPosicionAbsoluta(posDestino);
@@ -93,11 +106,26 @@ public class GeneracionYPrueba extends ExpansorArbol {
                 visitadas = new ArrayList<>(posVisitadas);
                 visitadas.add(posDestino);
 
+                setNumMov(getNumMov() + 1);                 // Incrementa el número de movientos realizados
+
                 return resolver(new TreeNode<>(nodo, new EstadoLaberinto(clon, visitadas, nuevoUmbral)));
             } else return false;
         } else {
-            return true;
+            return true;                                    // Ha encontrado la solución
         }
+    }
+
+    /**
+     * Comprueba si merece la pena seguir explorando la solución actual. Cuando el algoritmo ha realizado {@code numMov}
+     * movimientos comprueba si está bien encaminado, que en este caso significa comprobar si se encuentra en el
+     * cuadrante de la posición objetivo. El laberinto está dividido en 4 cuadrantes iguales que resultan de dividirlo a
+     * la mitad vertical y horizontalmente
+     *
+     * @param nodo Nodo parte de la solución siendo evaluado
+     * @return Si merece la pena seguir explorando esta solución
+     */
+    private boolean pruebaHeuristica(TreeNode<EstadoLaberinto> nodo) {
+        return getNumMov() != NUM_MOV_FIN || aplicarHeuristica(nodo).intValue() <= UMBRAL_HEURISTICO;
     }
 
     /**
@@ -148,7 +176,6 @@ public class GeneracionYPrueba extends ExpansorArbol {
                     ((posPosibles.size() * (posPosibles.size() + 1)) / 2) / posPosibles.size()));
 
         return posDestino;
-
     }
 
     /**
@@ -173,22 +200,16 @@ public class GeneracionYPrueba extends ExpansorArbol {
     }
 
     /**
-     * @return Imposible
-     * @throws UnsupportedOperationException El algoritmo de Generación Y Prueba no emplea ninguna heurística
+     * @return Número de movimientos dados por el algoritmo en un momento dado
      */
-    @Override
-    protected Number aplicarHeuristica(TreeNode<EstadoLaberinto> nodo) {
-        throw new UnsupportedOperationException("El algoritmo \"" + getClass().getName() +
-                "\" no utiliza funciones heurísticas");
+    private int getNumMov() {
+        return numMov;
     }
 
     /**
-     * @return Imposible
-     * @throws UnsupportedOperationException El algoritmo de Generación Y Prueba no emplea ninguna heurística
+     * @param numMov Nuevo número de movimientos
      */
-    @Override
-    protected Heuristica getHeuristica() {
-        throw new UnsupportedOperationException("El algoritmo \"" + getClass().getName() +
-                "\" no utiliza funciones heurísticas");
+    private void setNumMov(int numMov) {
+        this.numMov = numMov;
     }
 }

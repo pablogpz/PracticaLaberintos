@@ -2,6 +2,7 @@ package uex;
 
 import uex.algoritmos.ExpansorArbol;
 import uex.algoritmos.GeneracionYPrueba;
+import uex.heuristicas.DistanciaAlObjetivo;
 import uex.parsers.CasillaParser;
 
 import java.io.File;
@@ -13,7 +14,7 @@ public class Simulador {
         // TESTING ->
 
         CargadorLaberinto cargador = null;
-        ExpansorArbol generacionYPrueba = new GeneracionYPrueba(null);
+        ExpansorArbol generacionYPrueba = new GeneracionYPrueba(new DistanciaAlObjetivo());
 
         try {
             cargador = new CargadorLaberinto(new File("res/laberintos"), new CasillaParser());
