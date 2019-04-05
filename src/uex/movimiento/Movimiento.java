@@ -1,7 +1,5 @@
 package uex.movimiento;
 
-import java.util.function.BiFunction;
-
 /**
  * Clase que modela una transformación de posiciones por movimiento. Un movimiento es un desplazamiento de unas unidades
  * dadas en una dirección dada
@@ -18,29 +16,6 @@ public class Movimiento {
     public Movimiento(Direccion dirMovimiento, int unidades) {
         this.dirMovimiento = dirMovimiento;
         this.unidades = Math.abs(unidades);
-    }
-
-    /**
-     * @return Función de transformación de posiciones por moviento.
-     * Suma a las coordenadas de una posición las unidades indicadas por el movimiento en una dirección determinada
-     */
-    public static BiFunction<Posicion, Movimiento, Posicion> funcionTransformacion() {
-        return (posicion, movimiento) -> {
-            switch (movimiento.getDirMovimiento()) {
-                case NORTE:
-                    posicion.setY(posicion.getY() - movimiento.getUnidades());
-                    break;
-                case ESTE:
-                    posicion.setX(posicion.getX() + movimiento.getUnidades());
-                    break;
-                case SUR:
-                    posicion.setY(posicion.getY() + movimiento.getUnidades());
-                    break;
-                case OESTE:
-                    posicion.setX(posicion.getX() - movimiento.getUnidades());
-            }
-            return posicion;
-        };
     }
 
     /**

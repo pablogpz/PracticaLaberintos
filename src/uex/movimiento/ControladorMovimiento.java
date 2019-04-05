@@ -60,13 +60,32 @@ public class ControladorMovimiento {
     }
 
     /**
-     * Transforma la posición actual en otra posición por el movimiento indicado. No actualiza la posición actual
+     * Transforma la posición actual en otra posición por el movimiento indicado. No actualiza la posición actual.
+     * Suma a las coordenadas de una posición las unidades indicadas por el movimiento en una dirección determinada
      *
      * @param movimiento Movimiento a aplicar
      * @return Posición destino
      */
     public Posicion aplicarMovimiento(Movimiento movimiento) {
-        return Movimiento.funcionTransformacion().apply(new Posicion(getPosicion()), movimiento);
+        // Copia de la posición actual en la que aplicar el movimiento
+        Posicion posFinal = new Posicion(getPosicion());
+
+        // Aplica el movimiento
+        switch (movimiento.getDirMovimiento()) {
+            case NORTE:
+                posFinal.setY(posFinal.getY() - movimiento.getUnidades());
+                break;
+            case ESTE:
+                posFinal.setX(posFinal.getX() + movimiento.getUnidades());
+                break;
+            case SUR:
+                posFinal.setY(posFinal.getY() + movimiento.getUnidades());
+                break;
+            case OESTE:
+                posFinal.setX(posFinal.getX() - movimiento.getUnidades());
+        }
+
+        return posFinal;
     }
 
     /**

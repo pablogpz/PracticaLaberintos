@@ -106,10 +106,11 @@ public class Laberinto {
     }
 
     /**
-     * @return Umbral asociado al laberinto. Si el umbral vale 0 se devuelve uno por defecto {@link Laberinto#DEF_UMBRAL}
+     * @return Umbral asociado al laberinto. Si el umbral es menor o igual a 0 devuelve uno por
+     * defecto {@link Laberinto#DEF_UMBRAL}
      */
     public int getUmbral() {
-        return umbral != 0 ? umbral : DEF_UMBRAL;
+        return umbral > 0 ? umbral : DEF_UMBRAL;
     }
 
     /**
