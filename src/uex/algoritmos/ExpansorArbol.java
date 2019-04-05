@@ -72,21 +72,21 @@ public abstract class ExpansorArbol {
     /**
      * @return Función heurística a aplicar a los nodos del árbol
      */
-    protected Heuristica getHeuristica() {
+    public Heuristica getHeuristica() {
         return heuristica;
     }
 
     /**
      * @param heuristica Nueva función heurística
      */
-    protected void setHeuristica(Heuristica heuristica) {
+    public void setHeuristica(Heuristica heuristica) {
         this.heuristica = heuristica;
     }
 
     /**
      * @return Arbol de decisión para modelar la expansión del algoritmo
      */
-    protected TreeNode<EstadoLaberinto> getArbolDecision() {
+    public TreeNode<EstadoLaberinto> getArbolDecision() {
         return arbolDecision;
     }
 
@@ -100,7 +100,7 @@ public abstract class ExpansorArbol {
     /**
      * @param contNodosGen Nuevo número de nodos generados en memoria
      */
-    protected void setContNodosGen(int contNodosGen) {
+    public void setContNodosGen(int contNodosGen) {
         this.contNodosGen = contNodosGen;
     }
 

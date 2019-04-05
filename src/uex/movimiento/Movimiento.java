@@ -3,7 +3,7 @@ package uex.movimiento;
 import java.util.function.BiFunction;
 
 /**
- * Clase que modela una transformación de posiciones por movimiento. Un movimiento es un desplazamientos de unas unidades
+ * Clase que modela una transformación de posiciones por movimiento. Un movimiento es un desplazamiento de unas unidades
  * dadas en una dirección dada
  */
 public class Movimiento {

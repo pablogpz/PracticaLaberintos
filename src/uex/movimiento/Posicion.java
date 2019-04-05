@@ -26,14 +26,24 @@ public class Posicion {
     }
 
     /**
-     * Calcula la distancia en línea recta entre dos posiciones
+     * Calcula la distancia real entre dos posiciones
      *
      * @param posicionDestino Posición de destino
      * @return Distancia a la posición destino en línea recta
      */
-    public double distanciaA(Posicion posicionDestino) {
+    public double distanciaA_real(Posicion posicionDestino) {
         return Math.sqrt(Math.pow((posicionDestino.getX() - getX()), 2) +
                 Math.pow(posicionDestino.getY() - getY(), 2));
+    }
+
+    /**
+     * Calcula la distancia discretizada en movimientos entre dos posiciones
+     *
+     * @param posicionDestino Posición de destino
+     * @return Distancia a la posición destino cuantificada en movimientos de casilla
+     */
+    public int distanciaA_discreta(Posicion posicionDestino) {
+        return Math.abs(posicionDestino.getX() - getX() + posicionDestino.getY() - getY());
     }
 
     /**

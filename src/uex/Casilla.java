@@ -2,7 +2,7 @@ package uex;
 
 /**
  * Clase encargada de modelar la casilla de un laberinto.
- * Cada casilla almacena un valor que indica qué tipo de casi   lla es
+ * Cada casilla almacena un valor que indica qué tipo de casllla es
  */
 public class Casilla {
 

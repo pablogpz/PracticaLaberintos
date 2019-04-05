@@ -15,10 +15,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+/**
+ * TODO Documentar
+ */
 public class GeneracionYPrueba extends ExpansorArbol {
 
     private static final int NUM_ITERACIONES = 25;          // Número máximo de intentos
-    private final int NUM_MOV_FIN;                          // Número de movimientos hasta la prueba heurística
+    private final int NUM_MOV_PRUEBA;                       // Número de movimientos hasta la prueba heurística
     private final int UMBRAL_HEURISTICO;                    // Umbral para determinar si merece la pena seguir con la iteración
 
     private int numMov;                                     // Número de movimientos dados por el algoritmo en un momento dado
@@ -30,7 +33,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
         super(heuristica);
 
         // Ponderado en lo que consume de media el algoritmo en costes cuando ha realizado la mitad de los pasos medios
-        NUM_MOV_FIN = (Laberinto.instancia().getUmbral() / 2) / 5;
+        NUM_MOV_PRUEBA = (int) (Laberinto.instancia().getUmbral() / 1.5 / 5);
         // Ponderado en los pasos que da de media en algoritmo hasta llegar al cuadrante de la posición objetivo
         UMBRAL_HEURISTICO = Laberinto.instancia().getDimension() / 2;
     }
@@ -51,7 +54,11 @@ public class GeneracionYPrueba extends ExpansorArbol {
         // Realiza hasta un cierto número de iteraciones intentando encontrar una solución
         getReloj().start();
         do {
-            copiaArbol = getArbolDecision().copy();
+            /* REINICIO DE VARIABLES ENTRE ITERACIONES */
+
+            setNumMov(0);                                   // Reinicia el número de movimientos realizados en cada it.
+            copiaArbol = getArbolDecision().copy();         // Reinicia la copia del nodo raíz inicial en cada it.
+
             exito = resolver(copiaArbol);
             numIt++;
         } while (!exito && numIt < NUM_ITERACIONES);
@@ -62,10 +69,9 @@ public class GeneracionYPrueba extends ExpansorArbol {
             System.out.println("ÉXITO en " + numIt + " intentos");
             mostrarSolucion(copiaArbol);
         } else {
-            System.out.println("NO ENCONTRÓ SOLUCIÓN en " + NUM_ITERACIONES + " intentos\nPosiblemente no tenga solución\n");
+            System.out.println("NO ENCONTRÓ SOLUCIÓN en " + NUM_ITERACIONES + " intentos\n" +
+                    "Posiblemente no tenga solución o se rechazó la solución parcial\n");
         }
-
-        getReloj().reset();                                 // Reinicia el reloj
     }
 
     /**
@@ -125,7 +131,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
      * @return Si merece la pena seguir explorando esta solución
      */
     private boolean pruebaHeuristica(TreeNode<EstadoLaberinto> nodo) {
-        return getNumMov() != NUM_MOV_FIN || aplicarHeuristica(nodo).intValue() <= UMBRAL_HEURISTICO;
+        return getNumMov() != NUM_MOV_PRUEBA || aplicarHeuristica(nodo).intValue() <= UMBRAL_HEURISTICO;
     }
 
     /**
