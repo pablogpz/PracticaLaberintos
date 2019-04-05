@@ -29,12 +29,18 @@ public class EjecutorExpansor {
         imprimirLaberinto();                                // Muestra el laberinto sin resolver
         resetItHeuristicas();                               // Reinicia las heurísticas disponibles
 
+        imprimirCabecera();
         // Ejecuta el algoritmo establecido en el laberinto cargado empleando todas las heurísticas
         while (itHeuristicas.hasNext()) {
             expansorArbol.setHeuristica(itHeuristicas.next());
             System.out.println("*\t" + expansorArbol.getHeuristica() + "\t*");
             expansorArbol.resolver();
         }
+    }
+
+    private void imprimirCabecera() {
+        System.out.println("ALGORITMO : " + getExpansorArbol().getClass().getSimpleName());
+        System.out.println("**************************************************************");
     }
 
     /**
