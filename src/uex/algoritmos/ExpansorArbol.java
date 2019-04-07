@@ -88,7 +88,7 @@ public abstract class ExpansorArbol {
     /**
      * @return Arbol de decisión para modelar la expansión del algoritmo
      */
-    public TreeNode<EstadoLaberinto> getArbolDecision() {
+    protected TreeNode<EstadoLaberinto> getArbolDecision() {
         return arbolDecision;
     }
 
@@ -102,14 +102,14 @@ public abstract class ExpansorArbol {
     /**
      * @param contNodosGen Nuevo número de nodos generados en memoria
      */
-    public void setContNodosGen(int contNodosGen) {
+    protected void setContNodosGen(int contNodosGen) {
         this.contNodosGen = contNodosGen;
     }
 
     /**
      * @return Medidor empleado para medir el tiempo de ejecución del algoritmo
      */
-    public Stopwatch getReloj() {
+    protected Stopwatch getReloj() {
         return reloj;
     }
 }

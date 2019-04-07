@@ -72,12 +72,12 @@ public class EstadoLaberinto {
 
         stringBuilder.append("\n-------------------------------------------------------------\n");
 
-        stringBuilder.append(jugador).append("\n");
+        stringBuilder.append(getJugador()).append("\n");
         stringBuilder.append("Posiciones visitadas : \n");
         getPosVisitadas().forEach(pos -> stringBuilder.append("\t").append(pos).append("\n"));
         stringBuilder.append("Umbral : ").append(getUmbral()).append("\n");
 
-        stringBuilder.append("-------------------------------------------------------------\n");
+        stringBuilder.append("---------------------------------------------------------------\n");
 
         return stringBuilder.toString();
     }

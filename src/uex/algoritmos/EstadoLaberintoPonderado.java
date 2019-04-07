@@ -12,7 +12,7 @@ import java.util.List;
  * Estado del laberinto ponderado mediante una función de ponderación que devuelve el resultado de sumar la
  * puntuación heurística y el coste acumulado (umbral)
  */
-public class EstadoLaberintoPonderado extends EstadoLaberinto {
+public class EstadoLaberintoPonderado extends EstadoLaberinto implements Comparable {
 
     private Number puntuacionHeuristica;                // Puntuación heurística asociada al estado
     private int ponderacion;                            // Ponderación asociada al estado
@@ -28,7 +28,6 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto {
         this.puntuacionHeuristica = puntuacionHeuristica;
         actualizarPonderacion();
     }
-
 
     /**
      * @param heuristica Función con la que evaluar el estado inicial
@@ -91,5 +90,44 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto {
 
     private void setPonderacion(int ponderacion) {
         this.ponderacion = ponderacion;
+    }
+
+    /**
+     * Los estados se ordenan por el orden natural del valor de su ponderación
+     *
+     * @param o Otro estado
+     * @return Orden natural de las ponderaciones
+     */
+    @Override
+    public int compareTo(Object o) {
+        return Integer.compare(getPonderacion(), ((EstadoLaberintoPonderado) o).getPonderacion());
+    }
+
+    /**
+     * @param obj Otro estado
+     * @return Dos estados son equivalentes si el jugador se encuentra en la misma posición en el laberinto
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return getJugador().ctrlMovimiento().getPosicion().equals(
+                ((EstadoLaberintoPonderado) obj).getJugador().ctrlMovimiento().getPosicion());
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("\n-------------------------------------------------------------\n");
+
+        stringBuilder.append(getJugador()).append("\n");
+        stringBuilder.append("Posiciones visitadas : \n");
+        getPosVisitadas().forEach(pos -> stringBuilder.append("\t").append(pos).append("\n"));
+        stringBuilder.append("Umbral : ").append(getUmbral()).append("\n");
+        stringBuilder.append("Puntuación heurística : ").append(getPuntuacionHeuristica()).append("\n");
+        stringBuilder.append("Ponderación : ").append(getPonderacion()).append("\n");
+
+        stringBuilder.append("---------------------------------------------------------------\n");
+
+        return stringBuilder.toString();
     }
 }
