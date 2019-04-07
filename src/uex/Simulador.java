@@ -1,7 +1,9 @@
 package uex;
 
+import uex.algoritmos.AEstrella;
 import uex.algoritmos.EjecutorExpansor;
 import uex.algoritmos.GeneracionYPrueba;
+import uex.heuristicas.DistanciaAlObjetivo;
 import uex.parsers.CasillaParser;
 
 import java.io.File;
@@ -23,9 +25,12 @@ public class Simulador {
             e.printStackTrace();
         }
 
-        //noinspection ConstantConditions
-        while (cargador.cargarSiguienteLaberinto())
-            ejecutorExpansor.ejecutar();
+        cargador.cargarSiguienteLaberinto();
+        new AEstrella(DistanciaAlObjetivo.tipo(DistanciaAlObjetivo.Calculo.REAL)).resolver();
+
+//        //noinspection ConstantConditions
+//        while (cargador.cargarSiguienteLaberinto())
+//            ejecutorExpansor.ejecutar();
 
         // <- TESTING
     }

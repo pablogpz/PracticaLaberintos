@@ -22,9 +22,9 @@ public abstract class DistanciaAlObjetivo {
     public static Heuristica tipo(Calculo calculo) {
         switch (calculo) {
             case REAL:
-                return DistanciaAlObjetivo_discreta.singletonInstance();
-            case DISCRETA:
                 return DistanciaAlObjetivo_real.singletonInstance();
+            case DISCRETA:
+                return DistanciaAlObjetivo_discreta.singletonInstance();
             default:
                 return null;
         }

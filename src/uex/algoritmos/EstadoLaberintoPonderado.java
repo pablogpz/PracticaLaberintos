@@ -62,6 +62,13 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto {
     }
 
     /**
+     * @return Ponderación asociada al estado
+     */
+    public int getPonderacion() {
+        return ponderacion;
+    }
+
+    /**
      * Actualiza la puntuación heurística y su ponderación
      *
      * @param puntuacionHeuristica Nueva puntuación heurìstica
@@ -69,17 +76,6 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto {
     public void setPuntuacionHeuristica(Number puntuacionHeuristica) {
         this.puntuacionHeuristica = puntuacionHeuristica;
         actualizarPonderacion();
-    }
-
-    /**
-     * @return Ponderación asociada al estado
-     */
-    public int getPonderacion() {
-        return ponderacion;
-    }
-
-    private void setPonderacion(int ponderacion) {
-        this.ponderacion = ponderacion;
     }
 
     /**
@@ -91,5 +87,9 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto {
     protected void setUmbral(int umbral) {
         super.setUmbral(umbral);
         actualizarPonderacion();
+    }
+
+    private void setPonderacion(int ponderacion) {
+        this.ponderacion = ponderacion;
     }
 }
