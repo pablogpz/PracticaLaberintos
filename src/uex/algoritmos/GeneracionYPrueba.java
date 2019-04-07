@@ -70,7 +70,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
             mostrarSolucion(copiaArbol);
         } else {
             System.out.println("NO ENCONTRÓ SOLUCIÓN en " + NUM_ITERACIONES + " intentos\n" +
-                    "Posiblemente no tenga solución o se rechazó la solución parcial\n");
+                    "Posiblemente no tenga solución o se rechazaron todos los caminos parciales\n");
         }
     }
 

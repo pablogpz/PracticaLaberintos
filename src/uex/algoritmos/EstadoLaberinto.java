@@ -62,6 +62,10 @@ public class EstadoLaberinto {
         return umbral;
     }
 
+    protected void setUmbral(int umbral) {
+        this.umbral = umbral;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
