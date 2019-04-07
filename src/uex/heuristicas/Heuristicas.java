@@ -43,6 +43,7 @@ public class Heuristicas {
         inicializarHeuristicas_manualmente();
 
         // Colección de implementaciones heurísticas conocidas
+        System.out.println("Obteniendo heurísitcas implementadas...");
         Set<Class<? extends Heuristica>> implHeuristicas = new Reflections().getSubTypesOf(Heuristica.class);
 
         // Elimina las implementaciones heurísticas añadidas manualmente

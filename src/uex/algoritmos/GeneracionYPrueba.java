@@ -95,12 +95,13 @@ public class GeneracionYPrueba extends ExpansorArbol {
         if (!Laberinto.instancia().casilla(cMov.getPosicion()).esObjetivo()) {
             // Selección de operando
             Posicion posDestino = seleccionarOperando(nodo);
-            // Actualización del umbral. Si no hay posición disponible se actualiza a -1 para detener la iteración
-            nuevoUmbral = estadoLaberinto.getUmbral() - actualizarUmbral(posDestino);
+            /* Actualización del umbral. Si no hay posición disponible se actualiza a un valor mayor que el umbral
+            para detener la iteración */
+            nuevoUmbral = estadoLaberinto.getUmbral() + costeAsociado(posDestino);
             setContNodosGen(getContNodosGen() + 1);         // Incrementa en 1 el número de nodos generados
 
             // Determina si el nuevo umbral no supera el disponible
-            if (nuevoUmbral >= 0) {
+            if (nuevoUmbral < Laberinto.instancia().getUmbral()) {
                 // Comrprobación heurística de si merece la pena seguir evaluando esta iteración
                 if (!pruebaHeuristica(nodo)) return false;
 

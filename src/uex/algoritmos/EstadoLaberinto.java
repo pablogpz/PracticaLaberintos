@@ -1,7 +1,6 @@
 package uex.algoritmos;
 
 import uex.Jugador;
-import uex.Laberinto;
 import uex.movimiento.Posicion;
 
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public class EstadoLaberinto {
         // Añade la posición inicial a las visitadas
         List<Posicion> posVisitadas = new ArrayList<>(Collections.singletonList(jugador.ctrlMovimiento().getPosicion()));
 
-        return new EstadoLaberinto(jugador, posVisitadas, Laberinto.instancia().getUmbral());
+        return new EstadoLaberinto(jugador, posVisitadas, 0);
     }
 
     /**

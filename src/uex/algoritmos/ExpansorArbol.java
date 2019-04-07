@@ -55,10 +55,12 @@ public abstract class ExpansorArbol {
 
     /**
      * @param posicionDestino Posición de destino
-     * @return Coste asociado a la posición de destino, o {@code Integer.MAX_VALUE} si la posición de destino es nula
+     * @return Coste asociado a la posición de destino, o {@code  Laberinto.instancia().getUmbral()}
+     * si la posición de destino es nula
      */
-    protected int actualizarUmbral(Posicion posicionDestino) {
-        return posicionDestino != null ? Laberinto.instancia().casilla(posicionDestino).getValor() : Integer.MAX_VALUE;
+    protected int costeAsociado(Posicion posicionDestino) {
+        return posicionDestino != null ? Laberinto.instancia().casilla(posicionDestino).getValor() :
+                Laberinto.instancia().getUmbral();
     }
 
     /**
