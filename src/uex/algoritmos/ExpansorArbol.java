@@ -1,8 +1,8 @@
 package uex.algoritmos;
 
-import com.diffplug.common.base.TreeNode;
 import com.google.common.base.Stopwatch;
 import uex.Laberinto;
+import uex.durian.TreeNode;
 import uex.heuristicas.Heuristica;
 import uex.movimiento.Posicion;
 
@@ -29,6 +29,11 @@ public abstract class ExpansorArbol {
         contNodosGen = 0;
         reloj = Stopwatch.createUnstarted();
     }
+
+    /**
+     * Reinicia el estado interno del expansor, dejándolo listo para recibir otro laberinto
+     */
+    protected abstract void resetExpansor();
 
     /**
      * Ejecuta el esquema algorítmico
@@ -59,7 +64,7 @@ public abstract class ExpansorArbol {
      * si la posición de destino es nula
      */
     protected int costeAsociado(Posicion posicionDestino) {
-        return posicionDestino != null ? Laberinto.instancia().casilla(posicionDestino).getValor() :
+        return posicionDestino != null ? Laberinto.instancia().casilla(posicionDestino).valor() :
                 Laberinto.instancia().getUmbral();
     }
 
@@ -111,5 +116,9 @@ public abstract class ExpansorArbol {
      */
     protected Stopwatch getReloj() {
         return reloj;
+    }
+
+    protected void setArbolDecision(TreeNode<EstadoLaberinto> arbolDecision) {
+        this.arbolDecision = arbolDecision;
     }
 }

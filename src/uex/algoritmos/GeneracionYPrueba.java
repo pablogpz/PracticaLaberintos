@@ -1,10 +1,10 @@
 package uex.algoritmos;
 
-import com.diffplug.common.base.TreeDef;
-import com.diffplug.common.base.TreeNode;
-import com.diffplug.common.base.TreeStream;
 import uex.Jugador;
 import uex.Laberinto;
+import uex.durian.TreeDef;
+import uex.durian.TreeNode;
+import uex.durian.TreeStream;
 import uex.heuristicas.Heuristica;
 import uex.movimiento.ControladorMovimiento;
 import uex.movimiento.Posicion;
@@ -39,6 +39,15 @@ public class GeneracionYPrueba extends ExpansorArbol {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void resetExpansor() {
+        setContNodosGen(0);                                 // Reinicia el número de nodos generados
+        getReloj().reset();                                 // Reinicia el cronómetro
+    }
+
+    /**
      * Implementa el algoritmo de búsqueda con información "Generación y Prueba". Ordena los operadores disponibles
      * por coste. El coste de un movimiento es el valor asociado a la casilla de la posición destino.
      */
@@ -48,9 +57,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
         boolean exito;                                      // Resultado de la última iteración. Determina el éxito
         int numIt = 0;                                      // Número de iteración
 
-        setContNodosGen(0);                                 // Reinicia el número de nodos generados
-        setNumMov(0);                                       // Reinicia el número de movimientos realizados
-
+        resetExpansor();
         // Realiza hasta un cierto número de iteraciones intentando encontrar una solución
         getReloj().start();
         do {
@@ -165,7 +172,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
                 .stream()
                 .map(cMov::aplicarMovimiento)
                 .filter(posicion -> !posVisitadas.contains(posicion))
-                .sorted(Comparator.comparingInt(p -> Laberinto.instancia().casilla(p).getValor()))
+                .sorted(Comparator.comparingInt(this::costeAsociado))
                 .collect(Collectors.toList());
 
         // Comprueba si no se ha encerrado a sí mismo. Sino calcula la siguiente posición

@@ -21,13 +21,13 @@ public class Casilla {
      * @return Si es una celda objetivo
      */
     public boolean esObjetivo() {
-        return getValor() == VALOR_OBJETIVO;
+        return valor() == VALOR_OBJETIVO;
     }
 
     /**
      * @return Valor de la casilla
      */
-    public int getValor() {
+    public int valor() {
         return valor;
     }
 
@@ -40,6 +40,6 @@ public class Casilla {
 
     @Override
     public String toString() {
-        return esObjetivo() ? " " + getValor() + " " : "[" + getValor() + "]";
+        return esObjetivo() ? " " + valor() + " " : "[" + valor() + "]";
     }
 }

@@ -12,20 +12,20 @@ import java.util.List;
  * Estado del laberinto ponderado mediante una función de ponderación que devuelve el resultado de sumar la
  * puntuación heurística y el coste acumulado (umbral)
  */
-public class EstadoLaberintoPonderado extends EstadoLaberinto implements Comparable {
+public class EstadoLaberintoPonderado extends EstadoLaberinto {
 
-    private Number puntuacionHeuristica;                // Puntuación heurística asociada al estado
+    private Heuristica heuristica;                      // Función heurística con la que evaluar el estado
     private int ponderacion;                            // Ponderación asociada al estado
 
     /**
-     * @param jugador              Estado del jugador
-     * @param posVisitadas         Lista de posiciones visitadas
-     * @param umbral               Valor restante del umbral
-     * @param puntuacionHeuristica Resultado de la aplicacion de una función heurística con respecto a este estado
+     * @param jugador      Estado del jugador
+     * @param posVisitadas Lista de posiciones visitadas
+     * @param umbral       Valor restante del umbral
+     * @param heuristica   Función empleada para estimar la puntuación heurística del estado
      */
-    public EstadoLaberintoPonderado(Jugador jugador, List<Posicion> posVisitadas, int umbral, Number puntuacionHeuristica) {
+    public EstadoLaberintoPonderado(Jugador jugador, List<Posicion> posVisitadas, int umbral, Heuristica heuristica) {
         super(jugador, posVisitadas, umbral);
-        this.puntuacionHeuristica = puntuacionHeuristica;
+        this.heuristica = heuristica;
         actualizarPonderacion();
     }
 
@@ -38,26 +38,22 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto implements Compara
         Jugador jugador = new Jugador();
         // Añade la posición inicial a las visitadas
         List<Posicion> posVisitadas = new ArrayList<>(Collections.singletonList(jugador.ctrlMovimiento().getPosicion()));
-        // Estado inicial sin evaluar
-        EstadoLaberintoPonderado estadoInicial = new EstadoLaberintoPonderado(jugador, posVisitadas, 0, 0);
-        // Evalua según la heurística proporcionada el estado inicial
-        estadoInicial.setPuntuacionHeuristica(heuristica.apply(estadoInicial));
 
-        return estadoInicial;
+        return new EstadoLaberintoPonderado(jugador, posVisitadas, 0, heuristica);
     }
 
     /**
      * Actualiza el valor de la ponderación del estado
      */
     private void actualizarPonderacion() {
-        setPonderacion(getPuntuacionHeuristica().intValue() + getUmbral());
+        setPonderacion(getHeuristica().intValue() + getUmbral());
     }
 
     /**
      * @return Puntuación heurística asociada al estado
      */
-    public Number getPuntuacionHeuristica() {
-        return puntuacionHeuristica;
+    public Number getHeuristica() {
+        return heuristica.apply(this);
     }
 
     /**
@@ -65,16 +61,6 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto implements Compara
      */
     public int getPonderacion() {
         return ponderacion;
-    }
-
-    /**
-     * Actualiza la puntuación heurística y su ponderación
-     *
-     * @param puntuacionHeuristica Nueva puntuación heurìstica
-     */
-    public void setPuntuacionHeuristica(Number puntuacionHeuristica) {
-        this.puntuacionHeuristica = puntuacionHeuristica;
-        actualizarPonderacion();
     }
 
     /**
@@ -120,11 +106,11 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto implements Compara
         stringBuilder.append("\n-------------------------------------------------------------\n");
 
         stringBuilder.append(getJugador()).append("\n");
-        stringBuilder.append("Umbral : ").append(getUmbral()).append("\n");
-        stringBuilder.append("Puntuación heurística : ").append(getPuntuacionHeuristica()).append("\n");
+        stringBuilder.append("Umbral (Coste) : ").append(getUmbral()).append("\n");
+        stringBuilder.append("Puntuación heurística : ").append(getHeuristica()).append("\n");
         stringBuilder.append("Ponderación : ").append(getPonderacion()).append("\n");
 
-        stringBuilder.append("---------------------------------------------------------------\n");
+        stringBuilder.append("-------------------------------------------------------------\n");
 
         return stringBuilder.toString();
     }

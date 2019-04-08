@@ -1,11 +1,14 @@
 package uex.algoritmos;
 
-import com.diffplug.common.base.TreeNode;
+import uex.Jugador;
 import uex.Laberinto;
+import uex.durian.TreeNode;
 import uex.heuristicas.Heuristica;
+import uex.movimiento.ControladorMovimiento;
 import uex.movimiento.Posicion;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -13,18 +16,28 @@ import java.util.stream.Collectors;
  */
 public class AEstrella extends ExpansorArbol {
 
-    private ArrayList<TreeNode<EstadoLaberintoPonderado>> nodosAbiertos;    // Colección de nodos en exploración
-    private Set<TreeNode<EstadoLaberintoPonderado>> nodosCerrados;          // Colección de nodos explorados
+    private ArrayList<TreeNode<EstadoLaberinto>> nodosAbiertos;     // Colección de nodos en exploración
+    private Set<TreeNode<EstadoLaberinto>> nodosCerrados;           // Colección de nodos explorados
 
     /**
      * @param heuristica Función heurística a aplicar a los nodos del árbol
      */
     public AEstrella(Heuristica heuristica) {
         super(heuristica);
+        resetExpansor();
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void resetExpansor() {
+        // Actualiza el estado inicial a un estado ponderado inicial
+        setArbolDecision(new TreeNode<>(null, EstadoLaberintoPonderado.estadoInicial(getHeuristica())));
         nodosAbiertos = new ArrayList<>();
-        nodosAbiertos.add(new TreeNode<>(null, EstadoLaberintoPonderado.estadoInicial(heuristica)));
+        nodosAbiertos.add(getArbolDecision());                      // Añade el primer nodo, el estado inicial
         nodosCerrados = new HashSet<>();
+        getReloj().reset();                                         // Reinicia el cronómetro
     }
 
     /**
@@ -32,6 +45,70 @@ public class AEstrella extends ExpansorArbol {
      */
     @Override
     public void resolver() {
+        resetExpansor();                                            // Reinicia el expansor para una nueva ejecución
+        setContNodosGen(0);                                         // Reinicia el número de nodos generados
+        getReloj().start();
+
+        // Extracción de variables locales
+        Laberinto laberinto = Laberinto.instancia();
+        TreeNode<EstadoLaberinto> mejorNodo = nodosAbiertos.get(0); // Nodo más prometedor
+        Posicion operando;
+        Jugador clon;
+        ArrayList<Posicion> visitadas;
+
+        while (!laberinto.casilla(mejorNodo.getContent().getJugador().ctrlMovimiento().getPosicion()).esObjetivo() &&
+                mejorNodo.getContent().getUmbral() < laberinto.getUmbral()) {
+            // Cerrar el nodo más prometedor
+            agregarNodoCerrado(mejorNodo);
+            // Expande todos sus estados
+            do {
+                clon = (Jugador) mejorNodo.getContent().getJugador().clone();
+                visitadas = new ArrayList<>();
+                operando = seleccionarOperando(mejorNodo);
+
+                // Comprueba que el operador sea válido
+                if (operando != null) {
+                    // Aplica el operando
+                    clon.ctrlMovimiento().setPosicionAbsoluta(operando);
+                    visitadas.add(operando);
+
+                    // Genera el nuevo estado
+                    EstadoLaberintoPonderado estadoExpandido =
+                            new EstadoLaberintoPonderado(clon, visitadas, mejorNodo.getContent().getUmbral() +
+                                    costeAsociado(operando), getHeuristica());
+                    setContNodosGen(getContNodosGen() + 1);
+
+                    // Comprueba si el nuevo estado ya ha sido expandido
+                    if (enNodos(estadoExpandido)) {
+                        TreeNode<EstadoLaberinto> nodoEquivalente = recNodoEquiv(estadoExpandido);
+                        EstadoLaberinto estadoEquivalente = nodoEquivalente.getContent();
+                        // Si ha sido expandido comprueba si supone una alternativa mejor
+                        if (estadoExpandido.getUmbral() < estadoEquivalente.getUmbral()) {
+                            // Cambia el padre al nodo más prometedor y actualiza el coste de sus hijos
+                            nodoEquivalente.changeParent(mejorNodo);
+                            estadoEquivalente.setUmbral(estadoExpandido.getUmbral());
+                            actualizarHijos(nodoEquivalente);
+                            ordenarNodosAbiertos();
+                        } // Si no supone una alternativa mejor se descarta
+                    } else {
+                        // Si no ha sido expandido se añade al árbol de decisión y a la colección de nodos abiertos
+                        TreeNode<EstadoLaberinto> nodoExpandido = new TreeNode<>(mejorNodo, estadoExpandido);
+                        agregarNodoAbierto(nodoExpandido);
+                    }
+                }
+            } while (operando != null);
+
+            mejorNodo = nodosAbiertos.get(0);
+        }
+
+        getReloj().stop();
+
+        if (mejorNodo.getContent().getUmbral() < laberinto.getUmbral()) {
+            System.out.println("SOLUCIÓN ENCONTRADA");
+            mostrarSolucion(mejorNodo);
+        } else {
+            System.out.println("NO TIENE SOLUCIÓN");
+        }
     }
 
     /**
@@ -39,7 +116,32 @@ public class AEstrella extends ExpansorArbol {
      */
     @Override
     protected Posicion seleccionarOperando(TreeNode<EstadoLaberinto> nodo) {
-        return null;
+        // Variables del estado del laberinto actual
+        EstadoLaberinto estadoLaberinto = nodo.getContent();
+        /*
+        La lista de posiciones visitadas en primer lugar contiene la posicion del nodo que creo el nodo actual, y tras
+        sucesivas llamadas a este método, contendrá cada posicion expandida hasta que no queden posiciones posibles
+         */
+        List<Posicion> posVisitadas = estadoLaberinto.getPosVisitadas();
+        ControladorMovimiento cMov = estadoLaberinto.getJugador().ctrlMovimiento();
+
+        /*
+         Obtiene los movimientos posibles a partir de la posición actual y filtra aquellas que no resulten
+         en una posición ya expandida. Después ordena los movimientos por costes
+         */
+        List<Posicion> posPosibles = cMov.movimientosPosibles()
+                .stream()
+                .map(cMov::aplicarMovimiento)
+                .filter(posicion -> !posVisitadas.contains(posicion))
+                .sorted(Comparator.comparingInt(this::costeAsociado))
+                .collect(Collectors.toList());
+
+        // Si queda alguna posición posible la añade a las expandidas
+        if (posPosibles.size() != 0) posVisitadas.add(posPosibles.get(0));
+        else return null;
+
+        // Siguente posición posible elegida
+        return posPosibles.get(0);
     }
 
     /**
@@ -47,6 +149,26 @@ public class AEstrella extends ExpansorArbol {
      */
     @Override
     protected void mostrarSolucion(TreeNode<EstadoLaberinto> arbolDecision) {
+
+        // Imprime tiempo empleado
+        System.out.println("Tiempo empleado : " + getReloj().elapsed(TimeUnit.MICROSECONDS) + " " + TimeUnit.MICROSECONDS);
+        // Imprime el número de nodos generados en memoria
+        System.out.println("Número de nodos generados : " + getContNodosGen());
+
+        ArrayList<Posicion> camino = new ArrayList<>();
+        recuperarCamino(arbolDecision, camino);
+        System.out.println(new Laberinto.Solucionado(camino, arbolDecision.getContent().getUmbral()));
+        System.out.println(arbolDecision.getPath());
+    }
+
+    /**
+     * @param nodo   Nodo que llega a la solución
+     * @param camino Camino hasta la solución por el nodo suministrado
+     */
+    private void recuperarCamino(TreeNode<EstadoLaberinto> nodo, List<Posicion> camino) {
+        camino.add(nodo.getContent().getJugador().ctrlMovimiento().getPosicion());
+        if (nodo.getParent() != null)
+            recuperarCamino(nodo.getParent(), camino);
     }
 
     /**
@@ -54,17 +176,18 @@ public class AEstrella extends ExpansorArbol {
      *
      * @param nodo Nodo a añadir
      */
-    private void agregarNodoAbierto(TreeNode<EstadoLaberintoPonderado> nodo) {
+    private void agregarNodoAbierto(TreeNode<EstadoLaberinto> nodo) {
         nodosAbiertos.add(nodo);
         ordenarNodosAbiertos();
     }
 
     /**
-     * Añade un nodo a la colección de nodos cerrados
+     * Añade un nodo a la colección de nodos cerrados y lo elimina de los nodos abiertos
      *
-     * @param nodo Nodo a añadir
+     * @param nodo Nodo abierto a añadir
      */
-    private void agregarNodoCerrado(TreeNode<EstadoLaberintoPonderado> nodo) {
+    private void agregarNodoCerrado(TreeNode<EstadoLaberinto> nodo) {
+        nodosAbiertos.remove(nodo);
         nodosCerrados.add(nodo);
     }
 
@@ -78,8 +201,8 @@ public class AEstrella extends ExpansorArbol {
     /**
      * @return Todos los nodos expandidos hasta ahora
      */
-    private Collection<TreeNode<EstadoLaberintoPonderado>> nodosExpandidos() {
-        Set<TreeNode<EstadoLaberintoPonderado>> nodos = new HashSet<>(new HashSet<>(nodosAbiertos));
+    private Collection<TreeNode<EstadoLaberinto>> nodosExpandidos() {
+        Set<TreeNode<EstadoLaberinto>> nodos = new HashSet<>(new HashSet<>(nodosAbiertos));
         nodos.addAll(nodosCerrados);
 
         return nodos;
@@ -89,22 +212,22 @@ public class AEstrella extends ExpansorArbol {
      * @param estadoLaberintoPonderado Estado a comprobar si ya existe
      * @return Si el estado suministrado ya ha sido expandido
      */
-    private boolean enNodos(EstadoLaberintoPonderado estadoLaberintoPonderado) {
+    private boolean enNodos(EstadoLaberinto estadoLaberintoPonderado) {
         return nodosExpandidos()
                 .stream()
                 .map(TreeNode::getContent)
-                .collect(Collectors.toSet()).contains(estadoLaberintoPonderado);
+                .filter(estadoLaberinto -> estadoLaberinto.equals(estadoLaberintoPonderado))
+                .collect(Collectors.toSet()).size() != 0;
     }
 
     /**
      * @param estadoLaberintoPonderado Clave con la que recuperar el estado equivalente
-     * @return Estado equivalente al pasado por parámetro
+     * @return Nodo con el estado equivalente al pasado por parámetro
      */
-    private EstadoLaberintoPonderado recEstadoLaberintoExp(EstadoLaberintoPonderado estadoLaberintoPonderado) {
+    private TreeNode<EstadoLaberinto> recNodoEquiv(EstadoLaberinto estadoLaberintoPonderado) {
         return nodosExpandidos()
                 .stream()
-                .map(TreeNode::getContent)
-                .filter(estado -> estado.equals(estadoLaberintoPonderado))
+                .filter(nodo -> nodo.getContent().equals(estadoLaberintoPonderado))
                 .collect(Collectors.toList()).get(0);
     }
 
@@ -113,20 +236,18 @@ public class AEstrella extends ExpansorArbol {
      *
      * @param nodo Nodo padre con coste modificado
      */
-    private void actualizarHijos(TreeNode<EstadoLaberintoPonderado> nodo) {
+    private void actualizarHijos(TreeNode<EstadoLaberinto> nodo) {
         Laberinto laberinto = Laberinto.instancia();
 
         // Si tiene hijos los actualiza
         if (nodo.getChildren().size() != 0) {
             // Para cada hijo actualiza su coste y ponderación
-            for (TreeNode<EstadoLaberintoPonderado> hijo : nodo.getChildren()) {
+            for (TreeNode<EstadoLaberinto> hijo : nodo.getChildren()) {
                 EstadoLaberinto estadoHijo = hijo.getContent();
                 // Coste del movimiento que representa el hijo
-                int costeMovHijo = laberinto.casilla(estadoHijo.getJugador().ctrlMovimiento().getPosicion()).getValor();
-
+                int costeMovHijo = laberinto.casilla(estadoHijo.getJugador().ctrlMovimiento().getPosicion()).valor();
                 // Actualiza el coste del hijo con el nuevo coste del padre más el coste de su movimiento asociado
                 estadoHijo.setUmbral(nodo.getContent().getUmbral() + costeMovHijo);
-
                 // Si el hijo tiene más descendientes los actualiza también
                 if (hijo.getChildren().size() != 0)
                     actualizarHijos(hijo);

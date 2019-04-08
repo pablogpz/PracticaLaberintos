@@ -12,7 +12,7 @@ import java.util.List;
  * estable durante la ejecución de un algoritmo guardando el estado del jugador, una lista de posiciones visitadas y el
  * umbral restante
  */
-public class EstadoLaberinto {
+public class EstadoLaberinto implements Comparable {
 
     private Jugador jugador;                        // Estado del jugador
     private List<Posicion> posVisitadas;            // Lista de posiciones visitadas
@@ -66,6 +66,17 @@ public class EstadoLaberinto {
         this.umbral = umbral;
     }
 
+    /**
+     * No sigue criterio de comparación
+     *
+     * @param o -
+     * @return Siempre 0
+     */
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -77,7 +88,7 @@ public class EstadoLaberinto {
         getPosVisitadas().forEach(pos -> stringBuilder.append("\t").append(pos).append("\n"));
         stringBuilder.append("Umbral : ").append(getUmbral()).append("\n");
 
-        stringBuilder.append("---------------------------------------------------------------\n");
+        stringBuilder.append("-------------------------------------------------------------\n");
 
         return stringBuilder.toString();
     }

@@ -74,8 +74,10 @@ public class Laberinto {
                 .append("   0   1   2   3   4   5   6   7   8   9").append("\n");
         for (int y = 0; y < getDimension(); y++) {
             stringBuilder.append(y).append(" ");
-            for (int x = 0; x < getDimension(); x++)
-                stringBuilder.append(laberinto[y][x] != null ? laberinto[y][x] : "   ").append(" ");
+            for (int x = 0; x < getDimension(); x++) {
+                if (y == 0 && x == 0) stringBuilder.append(" >  ");
+                else stringBuilder.append(laberinto[y][x] != null ? laberinto[y][x] : "   ").append(" ");
+            }
             stringBuilder.append(y).append("\n");
         }
         stringBuilder.append("   0   1   2   3   4   5   6   7   8   9").append("\n");

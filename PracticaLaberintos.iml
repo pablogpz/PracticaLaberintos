@@ -8,7 +8,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="com.diffplug.durian:durian:3.4.0" level="project" />
     <orderEntry type="library" name="com.google.guava:guava:27.1-jre" level="project" />
     <orderEntry type="library" name="org.reflections:reflections:0.9.9-RC2" level="project" />
   </component>
