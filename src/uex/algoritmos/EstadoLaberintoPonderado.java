@@ -5,7 +5,6 @@ import uex.heuristicas.Heuristica;
 import uex.movimiento.Posicion;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -34,12 +33,7 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto {
      * @return Estado inicial de un laberinto inexplorado
      */
     public static EstadoLaberintoPonderado estadoInicial(Heuristica heuristica) {
-        // Nuevo jugador
-        Jugador jugador = new Jugador();
-        // Añade la posición inicial a las visitadas
-        List<Posicion> posVisitadas = new ArrayList<>(Collections.singletonList(jugador.ctrlMovimiento().getPosicion()));
-
-        return new EstadoLaberintoPonderado(jugador, posVisitadas, 0, heuristica);
+        return new EstadoLaberintoPonderado(new Jugador(), new ArrayList<>(), 0, heuristica);
     }
 
     /**
