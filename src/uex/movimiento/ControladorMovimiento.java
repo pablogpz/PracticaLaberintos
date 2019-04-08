@@ -38,7 +38,7 @@ public class ControladorMovimiento {
     public void setPosicionRelativa(Movimiento movimiento) {
         if (!movimientoLegal(aplicarMovimiento(movimiento)))
             throw new IllegalArgumentException("No se puede mover más allá de los límites del laberinto.\n\t" +
-                    "Movimiento : " + movimiento + "\n\tPosición actual : " + getPosicion());
+                    "Movimiento : " + movimiento + "\n\tPosición actual : " + posicion());
 
         // Mueve la posición en la dirección indicada las unidades indicadas
         setPosicion(aplicarMovimiento(movimiento));
@@ -68,7 +68,7 @@ public class ControladorMovimiento {
      */
     public Posicion aplicarMovimiento(Movimiento movimiento) {
         // Copia de la posición actual en la que aplicar el movimiento
-        Posicion posFinal = new Posicion(getPosicion());
+        Posicion posFinal = new Posicion(posicion());
 
         // Aplica el movimiento
         switch (movimiento.getDirMovimiento()) {
@@ -125,7 +125,7 @@ public class ControladorMovimiento {
     /**
      * @return Posición asociada al controlador
      */
-    public Posicion getPosicion() {
+    public Posicion posicion() {
         return posicion;
     }
 

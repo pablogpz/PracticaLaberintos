@@ -40,13 +40,13 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto {
      * Actualiza el valor de la ponderación del estado
      */
     private void actualizarPonderacion() {
-        setPonderacion(getHeuristica().intValue() + getUmbral());
+        setPonderacion(puntHeuristica().intValue() + getUmbral());
     }
 
     /**
      * @return Puntuación heurística asociada al estado
      */
-    public Number getHeuristica() {
+    public Number puntHeuristica() {
         return heuristica.apply(this);
     }
 
@@ -89,8 +89,8 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto {
      */
     @Override
     public boolean equals(Object obj) {
-        return getJugador().ctrlMovimiento().getPosicion().equals(
-                ((EstadoLaberintoPonderado) obj).getJugador().ctrlMovimiento().getPosicion());
+        return getJugador().ctrlMovimiento().posicion().equals(
+                ((EstadoLaberintoPonderado) obj).getJugador().ctrlMovimiento().posicion());
     }
 
     @Override
@@ -101,7 +101,7 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto {
 
         stringBuilder.append(getJugador()).append("\n");
         stringBuilder.append("Umbral (Coste) : ").append(getUmbral()).append("\n");
-        stringBuilder.append("Puntuación heurística : ").append(getHeuristica()).append("\n");
+        stringBuilder.append("Puntuación heurística : ").append(puntHeuristica()).append("\n");
         stringBuilder.append("Ponderación : ").append(getPonderacion()).append("\n");
 
         stringBuilder.append("-------------------------------------------------------------\n");

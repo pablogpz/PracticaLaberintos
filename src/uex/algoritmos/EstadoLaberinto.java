@@ -36,7 +36,7 @@ public class EstadoLaberinto implements Comparable {
         // Nuevo jugador
         Jugador jugador = new Jugador();
         // Añade la posición inicial a las visitadas
-        List<Posicion> posVisitadas = new ArrayList<>(Collections.singletonList(jugador.ctrlMovimiento().getPosicion()));
+        List<Posicion> posVisitadas = new ArrayList<>(Collections.singletonList(jugador.ctrlMovimiento().posicion()));
 
         return new EstadoLaberinto(jugador, posVisitadas, 0);
     }

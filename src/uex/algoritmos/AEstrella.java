@@ -48,7 +48,6 @@ public class AEstrella extends ExpansorArbol {
     @Override
     public void resolver() {
         resetExpansor();                                            // Reinicia el expansor para una nueva ejecución
-        getReloj().start();
 
         // Extracción de variables locales
         Laberinto laberinto = Laberinto.instancia();
@@ -57,7 +56,9 @@ public class AEstrella extends ExpansorArbol {
         Jugador clon;
         ArrayList<Posicion> visitadas;
 
-        while (!laberinto.casilla(mejorNodo.getContent().getJugador().ctrlMovimiento().getPosicion()).esObjetivo() &&
+        getReloj().start();
+
+        while (!laberinto.casilla(mejorNodo.getContent().getJugador().ctrlMovimiento().posicion()).esObjetivo() &&
                 mejorNodo.getContent().getUmbral() < laberinto.getUmbral()) {
             // Cerrar el nodo más prometedor
             agregarNodoCerrado(mejorNodo);
@@ -71,7 +72,7 @@ public class AEstrella extends ExpansorArbol {
                 if (operando != null) {
                     // Aplica el operando
                     clon.ctrlMovimiento().setPosicionAbsoluta(operando);
-                    visitadas.add(mejorNodo.getContent().getJugador().ctrlMovimiento().getPosicion());
+                    visitadas.add(mejorNodo.getContent().getJugador().ctrlMovimiento().posicion());
 
                     // Genera el nuevo estado
                     EstadoLaberintoPonderado estadoExpandido =
@@ -168,7 +169,7 @@ public class AEstrella extends ExpansorArbol {
      * @param camino Camino hasta la solución por el nodo suministrado
      */
     private void recuperarCamino(TreeNode<EstadoLaberinto> nodo, List<Posicion> camino) {
-        camino.add(nodo.getContent().getJugador().ctrlMovimiento().getPosicion());
+        camino.add(nodo.getContent().getJugador().ctrlMovimiento().posicion());
         if (nodo.getParent() != null)
             recuperarCamino(nodo.getParent(), camino);
     }
@@ -239,7 +240,6 @@ public class AEstrella extends ExpansorArbol {
      * @param nodo Nodo padre con coste modificado
      */
     private void actualizarHijos(TreeNode<EstadoLaberinto> nodo) {
-        Laberinto laberinto = Laberinto.instancia();
         int costeMovHijo;
 
         // Si tiene hijos los actualiza
@@ -248,7 +248,7 @@ public class AEstrella extends ExpansorArbol {
             for (TreeNode<EstadoLaberinto> hijo : nodo.getChildren()) {
                 EstadoLaberinto estadoHijo = hijo.getContent();
                 // Coste del movimiento que representa el hijo
-                costeMovHijo = laberinto.casilla(estadoHijo.getJugador().ctrlMovimiento().getPosicion()).valor();
+                costeMovHijo = costeAsociado(estadoHijo.getJugador().ctrlMovimiento().posicion());
                 // Actualiza el coste del hijo con el nuevo coste del padre más el coste de su movimiento asociado
                 estadoHijo.setUmbral(nodo.getContent().getUmbral() + costeMovHijo);
                 // Si el hijo tiene más descendientes los actualiza también

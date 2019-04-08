@@ -99,7 +99,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
         List<Posicion> visitadas;                           // Nueva lista de visitados
 
         // Comprueba si la casilla actual es el objetivo
-        if (!Laberinto.instancia().casilla(cMov.getPosicion()).esObjetivo()) {
+        if (!Laberinto.instancia().casilla(cMov.posicion()).esObjetivo()) {
             // Selección de operando
             Posicion posDestino = seleccionarOperando(nodo);
             /* Actualización del umbral. Si no hay posición disponible se actualiza a un valor mayor que el umbral

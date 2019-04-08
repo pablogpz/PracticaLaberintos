@@ -60,7 +60,7 @@ public abstract class DistanciaAlObjetivo {
 
         @Override
         public Number apply(EstadoLaberinto estadoLaberinto) {
-            Posicion posActual = estadoLaberinto.getJugador().ctrlMovimiento().getPosicion();
+            Posicion posActual = estadoLaberinto.getJugador().ctrlMovimiento().posicion();
             Posicion posDestino = Laberinto.instancia().getPosObjetivc();
 
             return posActual.distanciaA_discreta(posDestino);
@@ -90,7 +90,7 @@ public abstract class DistanciaAlObjetivo {
 
         @Override
         public Number apply(EstadoLaberinto estadoLaberinto) {
-            Posicion posActual = estadoLaberinto.getJugador().ctrlMovimiento().getPosicion();
+            Posicion posActual = estadoLaberinto.getJugador().ctrlMovimiento().posicion();
             Posicion posDestino = Laberinto.instancia().getPosObjetivc();
 
             return posActual.distanciaA_real(posDestino);
