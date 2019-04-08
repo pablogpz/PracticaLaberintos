@@ -78,7 +78,7 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto implements Compara
     }
 
     /**
-     * Actualiza el umbral y su ponderación
+     * Actualiza el coste (umbral) y su ponderación
      *
      * @param umbral Nuevo umbral
      */
@@ -120,8 +120,6 @@ public class EstadoLaberintoPonderado extends EstadoLaberinto implements Compara
         stringBuilder.append("\n-------------------------------------------------------------\n");
 
         stringBuilder.append(getJugador()).append("\n");
-        stringBuilder.append("Posiciones visitadas : \n");
-        getPosVisitadas().forEach(pos -> stringBuilder.append("\t").append(pos).append("\n"));
         stringBuilder.append("Umbral : ").append(getUmbral()).append("\n");
         stringBuilder.append("Puntuación heurística : ").append(getPuntuacionHeuristica()).append("\n");
         stringBuilder.append("Ponderación : ").append(getPonderacion()).append("\n");
