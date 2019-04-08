@@ -19,17 +19,17 @@ public class Simulador {
 
         try {
             cargador = new CargadorLaberinto(new File(RUTA_FCH_LABERINTOS), new CasillaParser());
-            cargador.cargarSiguienteLaberinto();
+            cargador.cargarSiguienteLaberinto();            // Carga el primer laberinto
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        EjecutorExpansor porDefecto = new EjecutorExpansor();
-        EjecutorExpansor genYPrueba = new EjecutorExpansor(new GeneracionYPrueba(porDefecto.heuristicaPorDefecto()));
-        EjecutorExpansor aEstrella = new EjecutorExpansor(new AEstrella(porDefecto.heuristicaPorDefecto()));
+        EjecutorExpansor genYPrueba = new EjecutorExpansor(new GeneracionYPrueba(EjecutorExpansor.heuristicaPorDefecto()));
+        EjecutorExpansor aEstrella = new EjecutorExpansor(new AEstrella(EjecutorExpansor.heuristicaPorDefecto()));
 
         //noinspection ConstantConditions
         do {
+            // Ejecuta los algoritmos
             genYPrueba.ejecutar();
             aEstrella.ejecutar();
         } while (cargador.cargarSiguienteLaberinto());

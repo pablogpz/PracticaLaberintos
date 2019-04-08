@@ -12,10 +12,7 @@ import java.util.Iterator;
 public class EjecutorExpansor {
 
     private ExpansorArbol expansorArbol;                    // Algoritmo a ejecutar
-    private Iterator<Heuristica> itHeuristicas;             // Iterador de heurísticas implementadas
-
-    public EjecutorExpansor() {
-    }
+    private static Iterator<Heuristica> itHeuristicas;      // Iterador de heurísticas implementadas
 
     /**
      * @param expansorArbol Esquema algorítmo a ejecutar
@@ -27,7 +24,7 @@ public class EjecutorExpansor {
     /**
      * @return Primera heurística que se va a evaluar
      */
-    public Heuristica heuristicaPorDefecto() {
+    public static Heuristica heuristicaPorDefecto() {
         resetItHeuristicas();
         return itHeuristicas.next();
     }
@@ -62,7 +59,7 @@ public class EjecutorExpansor {
     /**
      * Reinicia el iterador de heurísticas
      */
-    private void resetItHeuristicas() {
+    private static void resetItHeuristicas() {
         itHeuristicas = Heuristicas.itHeuristicas();
     }
 
