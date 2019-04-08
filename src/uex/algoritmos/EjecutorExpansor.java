@@ -11,7 +11,7 @@ import java.util.Iterator;
  */
 public class EjecutorExpansor {
 
-    private ExpansorArbol expansorArbol;                    // Algoritmo a ejecutar
+    private final ExpansorArbol expansorArbol;              // Algoritmo a ejecutar
     private static Iterator<Heuristica> itHeuristicas;      // Iterador de heurísticas implementadas
 
     /**
@@ -75,12 +75,5 @@ public class EjecutorExpansor {
      */
     public ExpansorArbol getExpansorArbol() {
         return expansorArbol;
-    }
-
-    /**
-     * @param expansorArbol Nuevo esquema algorítmico
-     */
-    public void setExpansorArbol(ExpansorArbol expansorArbol) {
-        this.expansorArbol = expansorArbol;
     }
 }

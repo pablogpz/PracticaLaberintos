@@ -8,7 +8,7 @@ public class Casilla {
 
     private static final int VALOR_OBJETIVO = 0;    // Valor de la casilla objetivo
 
-    private int valor;                              // Valor numérico de la casilla
+    private final int valor;                        // Valor numérico de la casilla
 
     /**
      * @param valor Valor inicial de la casilla
@@ -29,13 +29,6 @@ public class Casilla {
      */
     public int valor() {
         return valor;
-    }
-
-    /**
-     * @param valor Nuevo valor de la casilla
-     */
-    private void setValor(int valor) {
-        this.valor = valor;
     }
 
     @Override

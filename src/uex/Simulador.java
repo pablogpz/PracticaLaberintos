@@ -29,7 +29,7 @@ public class Simulador {
 
         //noinspection ConstantConditions
         do {
-            // Ejecuta los algoritmos
+            // Ejecuta cada algoritmo implementado con cada heurística implementada
             genYPrueba.ejecutar();
             aEstrella.ejecutar();
         } while (cargador.cargarSiguienteLaberinto());
