@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 
 public class Simulador {
 
-    private static String RUTA_FCH_LABERINTOS = "res/laberintos_ampl";
+    private static String RUTA_FCH_LABERINTOS = "res/laberintos_ampl_v2";
 
     public static void main(String[] args) {
         // TESTING ->
@@ -29,7 +29,7 @@ public class Simulador {
         //noinspection ConstantConditions
         do {
             // Ejecuta cada algoritmo implementado con cada heurística implementada
-//            genYPrueba.ejecutar();
+            genYPrueba.ejecutar();
             aEstrella.ejecutar();
         } while (cargador.cargarSiguienteLaberinto());
 

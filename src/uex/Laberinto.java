@@ -2,6 +2,8 @@ package uex;
 
 import uex.movimiento.Posicion;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,7 +18,7 @@ public class Laberinto {
     private static Laberinto instancia;                 // Instancia Singleton del laberinto
     private final int dimension;                        // Dimensión del laberinto
     private Casilla[][] laberinto;                      // Matriz de casillas que representa un tablero
-    private Posicion posObjetivc;                       // Posición de la casilla objetivo
+    private List<Posicion> posObjetivos;                // Posición de la casilla objetivo
     private int umbral;                                 // Umbral asociado al laberinto
 
     /**
@@ -25,6 +27,7 @@ public class Laberinto {
     private Laberinto(int dimension) {
         laberinto = new Casilla[dimension][dimension];
         this.dimension = dimension;
+        posObjetivos = new ArrayList<>();
     }
 
     /**
@@ -65,41 +68,6 @@ public class Laberinto {
         laberinto[posicion.getY()][posicion.getX()] = casilla;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append("Umbral : ").append(getUmbral())
-                .append("\nPosición del objetivo : ").append(getPosObjetivc()).append("\n\n")
-                .append("   0   1   2   3   4   5   6   7   8   9").append("\n");
-        for (int y = 0; y < getDimension(); y++) {
-            stringBuilder.append(y).append(" ");
-            for (int x = 0; x < getDimension(); x++) {
-                if (y == 0 && x == 0) stringBuilder.append(" >  ");
-                else stringBuilder.append(laberinto[y][x] != null ? laberinto[y][x] : "   ").append(" ");
-            }
-            stringBuilder.append(y).append("\n");
-        }
-        stringBuilder.append("   0   1   2   3   4   5   6   7   8   9").append("\n");
-
-
-        return stringBuilder.toString();
-    }
-
-    /**
-     * @return Posición de la casilla objetivo
-     */
-    public Posicion getPosObjetivc() {
-        return posObjetivc;
-    }
-
-    /**
-     * @param posObjetivc Posición de la celda objetivo
-     */
-    public void setPosObjetivc(Posicion posObjetivc) {
-        this.posObjetivc = posObjetivc;
-    }
-
     /**
      * @return Dimensión del laberinto
      */
@@ -123,6 +91,41 @@ public class Laberinto {
     }
 
     /**
+     * @return Posición de la casilla objetivo
+     */
+    public List<Posicion> getPosObjetivos() {
+        return posObjetivos;
+    }
+
+    /**
+     * @param posObjetivos Posición de la celda objetivo
+     */
+    public void setPosObjetivos(List<Posicion> posObjetivos) {
+        this.posObjetivos = posObjetivos;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("Umbral : ").append(getUmbral())
+                .append("\nPosición(es) del objetivo(s) : ").append(getPosObjetivos()).append("\n\n")
+                .append("   0   1   2   3   4   5   6   7   8   9").append("\n");
+        for (int y = 0; y < getDimension(); y++) {
+            stringBuilder.append(y).append(" ");
+            for (int x = 0; x < getDimension(); x++) {
+                if (y == 0 && x == 0) stringBuilder.append(" >  ");
+                else stringBuilder.append(laberinto[y][x] != null ? laberinto[y][x] : "   ").append(" ");
+            }
+            stringBuilder.append(y).append("\n");
+        }
+        stringBuilder.append("   0   1   2   3   4   5   6   7   8   9").append("\n");
+
+
+        return stringBuilder.toString();
+    }
+
+    /**
      * Clase para representar soluciones al laberinto como un camino en el laberinto
      */
     public static final class Solucionado extends Laberinto {
@@ -137,10 +140,9 @@ public class Laberinto {
             super(Laberinto.instancia().getDimension());
 
             setUmbral(umbralRestante);
-            setPosObjetivc(Laberinto.instancia().getPosObjetivc());
+            setPosObjetivos(new ArrayList<>(Collections.singletonList(posiciones.get(posiciones.size() - 1))));
             posiciones.forEach(posicion -> super.insertarCasilla
                     (Laberinto.instancia().casilla(posicion), posicion));
         }
-
     }
 }

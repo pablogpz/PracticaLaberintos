@@ -1,6 +1,7 @@
 package uex;
 
 import uex.parsers.CasillaParser;
+import uex.parsers.CasillaParserAmpl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,7 +60,7 @@ public class CargadorLaberinto {
             // Carga el laberinto parseado
             Laberinto.instancia().cargarLaberinto(parser.getLaberinto());
             Laberinto.instancia().setUmbral(parser.getUmbral());
-            Laberinto.instancia().setPosObjetivc(parser.getPosObjetivo());
+            Laberinto.instancia().setPosObjetivos(((CasillaParserAmpl) parser).getObjetivos());
         }
 
         return hayMasFicheros;

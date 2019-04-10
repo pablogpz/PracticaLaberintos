@@ -1,5 +1,10 @@
 package uex.movimiento;
 
+import uex.Laberinto;
+
+import java.util.Comparator;
+import java.util.List;
+
 /**
  * Clase encargada de modelar las distintas posiciones en laberinto siguiendo unos ejes cartesianos XY
  */
@@ -34,6 +39,16 @@ public class Posicion {
     public double distanciaA_real(Posicion posicionDestino) {
         return Math.sqrt(Math.pow(Math.abs(posicionDestino.getX() - getX()), 2) +
                 Math.pow(Math.abs(posicionDestino.getY() - getY()), 2));
+    }
+
+    /**
+     * @return Casilla objetivo más cercana a la posición actual
+     */
+    public Posicion objetivoMasCercano() {
+        List<Posicion> posObjetivos = Laberinto.instancia().getPosObjetivos();
+        posObjetivos.sort(Comparator.comparingInt(this::distanciaA_discreta));
+
+        return posObjetivos.get(0);
     }
 
     /**

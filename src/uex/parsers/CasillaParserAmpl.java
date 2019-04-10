@@ -5,14 +5,20 @@ import uex.Laberinto;
 import uex.movimiento.Posicion;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CasillaParserAmpl extends CasillaParser {
 
     public static final String CHAR_OBSTACULO = "▓";
 
+    private List<Posicion> objetivos;
+
     public CasillaParserAmpl() {
         super();
+
+        objetivos = new ArrayList<>();
     }
 
     /**
@@ -24,6 +30,7 @@ public class CasillaParserAmpl extends CasillaParser {
     public void parsearFichero(File fichero) {
         String[] valores;                   // Valores de las casillas de cada fila
 
+        objetivos = new ArrayList<>();
         try (Scanner scanner = new Scanner(fichero)) {
             // Lectura de la primera línea: umbral
             setUmbral(Integer.parseInt(scanner.nextLine()));
@@ -39,11 +46,15 @@ public class CasillaParserAmpl extends CasillaParser {
 
                     laberinto[y][x] = casilla;
                     // Comprueba si es la casilla objetivo
-                    if (casilla.esObjetivo()) setPosObjetivo(new Posicion(x, y));
+                    if (casilla.esObjetivo()) objetivos.add(new Posicion(x, y));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Posicion> getObjetivos() {
+        return objetivos;
     }
 }

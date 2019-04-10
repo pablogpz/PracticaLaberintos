@@ -1,6 +1,5 @@
 package uex.heuristicas;
 
-import uex.Laberinto;
 import uex.algoritmos.EstadoLaberinto;
 import uex.movimiento.Posicion;
 
@@ -46,6 +45,7 @@ public abstract class DistanciaAlObjetivo {
     private static class DistanciaAlObjetivo_discreta implements Heuristica {
 
         // Instancia Singleton de la heurística
+
         private static DistanciaAlObjetivo_discreta singletonInstance = null;
 
         private DistanciaAlObjetivo_discreta() {
@@ -61,10 +61,11 @@ public abstract class DistanciaAlObjetivo {
         @Override
         public Number apply(EstadoLaberinto estadoLaberinto) {
             Posicion posActual = estadoLaberinto.getJugador().ctrlMovimiento().posicion();
-            Posicion posDestino = Laberinto.instancia().getPosObjetivc();
+            Posicion posDestino = posActual.objetivoMasCercano();
 
             return posActual.distanciaA_discreta(posDestino);
         }
+
     }
 
     /**
@@ -76,6 +77,7 @@ public abstract class DistanciaAlObjetivo {
     private static class DistanciaAlObjetivo_real implements Heuristica {
 
         // Instancia Singleton de la heurística
+
         private static DistanciaAlObjetivo_real singletonInstance = null;
 
         private DistanciaAlObjetivo_real() {
@@ -91,10 +93,11 @@ public abstract class DistanciaAlObjetivo {
         @Override
         public Number apply(EstadoLaberinto estadoLaberinto) {
             Posicion posActual = estadoLaberinto.getJugador().ctrlMovimiento().posicion();
-            Posicion posDestino = Laberinto.instancia().getPosObjetivc();
+            Posicion posDestino = posActual.objetivoMasCercano();
 
             return posActual.distanciaA_real(posDestino);
         }
+
     }
 }
 

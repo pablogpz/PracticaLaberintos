@@ -158,6 +158,8 @@ public class AEstrella extends ExpansorArbol {
 
         ArrayList<Posicion> camino = new ArrayList<>();
         recuperarCamino(arbolDecision, camino);
+        camino.add(arbolDecision.getContent().getJugador().ctrlMovimiento().posicion());
+
         System.out.println(new Laberinto.Solucionado(camino, arbolDecision.getContent().getUmbral()));
         System.out.println(arbolDecision.getPath(EstadoLaberinto::toString, ""));
     }
