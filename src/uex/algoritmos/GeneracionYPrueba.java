@@ -12,7 +12,6 @@ import uex.movimiento.Posicion;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -204,7 +203,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
         TreeNode<EstadoLaberinto> sol = TreeDef.filteredList(collect, nodo -> nodo.getChildren().size() == 0).get(0);
 
         // Imprime tiempo empleado
-        System.out.println("Tiempo empleado : " + getReloj().elapsed(TimeUnit.MICROSECONDS) + " " + TimeUnit.MICROSECONDS);
+        System.out.println("Tiempo empleado : " + getReloj());
         // Imprime el número de nodos generados en memoria
         System.out.println("Número de nodos generados : " + getContNodosGen());
         // Representación del camino solución

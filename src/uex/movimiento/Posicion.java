@@ -32,8 +32,8 @@ public class Posicion {
      * @return Distancia a la posición destino en línea recta
      */
     public double distanciaA_real(Posicion posicionDestino) {
-        return Math.abs(Math.sqrt(Math.pow((posicionDestino.getX() - getX()), 2) +
-                Math.pow(posicionDestino.getY() - getY(), 2)));
+        return Math.sqrt(Math.pow(Math.abs(posicionDestino.getX() - getX()), 2) +
+                Math.pow(Math.abs(posicionDestino.getY() - getY()), 2));
     }
 
     /**
@@ -43,7 +43,7 @@ public class Posicion {
      * @return Distancia a la posición destino cuantificada en movimientos de casilla
      */
     public int distanciaA_discreta(Posicion posicionDestino) {
-        return Math.abs(posicionDestino.getX() - getX() + posicionDestino.getY() - getY());
+        return Math.abs(posicionDestino.getX() - getX()) + Math.abs(posicionDestino.getY() - getY());
     }
 
     /**

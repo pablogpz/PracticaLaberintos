@@ -8,7 +8,6 @@ import uex.movimiento.ControladorMovimiento;
 import uex.movimiento.Posicion;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -153,7 +152,7 @@ public class AEstrella extends ExpansorArbol {
     @Override
     protected void mostrarSolucion(TreeNode<EstadoLaberinto> arbolDecision) {
         // Imprime tiempo empleado
-        System.out.println("Tiempo empleado : " + getReloj().elapsed(TimeUnit.MICROSECONDS) + " " + TimeUnit.MICROSECONDS);
+        System.out.println("Tiempo empleado : " + getReloj());
         // Imprime el número de nodos generados en memoria
         System.out.println("Número de nodos generados : " + getContNodosGen());
 
