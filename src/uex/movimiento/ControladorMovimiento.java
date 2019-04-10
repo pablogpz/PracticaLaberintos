@@ -1,5 +1,6 @@
 package uex.movimiento;
 
+import uex.Casilla;
 import uex.Laberinto;
 
 import java.util.ArrayList;
@@ -129,13 +130,15 @@ public class ControladorMovimiento {
 
     /**
      * @param posicion Posición absoluta destino del movimiento
-     * @return Si el movimiento es legal, es decir, es una posición dentro de los límites del laberinto
+     * @return Si el movimiento es legal, es decir, es una posición dentro de los límites del laberinto y no representa
+     * una casilla de obstáculo
      */
     private boolean movimientoLegal(Posicion posicion) {
         return posicion.getX() >= 0 &&
                 posicion.getX() < Laberinto.instancia().getDimension() &&
                 posicion.getY() >= 0 &&
-                posicion.getY() < Laberinto.instancia().getDimension();
+                posicion.getY() < Laberinto.instancia().getDimension() &&
+                !Laberinto.instancia().casilla(posicion).getTipo().equals(Casilla.TipoCasilla.OBSTACULO);
     }
 
     /**
