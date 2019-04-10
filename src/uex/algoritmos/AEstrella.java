@@ -152,7 +152,6 @@ public class AEstrella extends ExpansorArbol {
      */
     @Override
     protected void mostrarSolucion(TreeNode<EstadoLaberinto> arbolDecision) {
-
         // Imprime tiempo empleado
         System.out.println("Tiempo empleado : " + getReloj().elapsed(TimeUnit.MICROSECONDS) + " " + TimeUnit.MICROSECONDS);
         // Imprime el número de nodos generados en memoria
