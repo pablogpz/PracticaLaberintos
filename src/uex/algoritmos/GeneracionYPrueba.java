@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
- * TODO Documentar
+ * TODO Documentar GeneracionYPrueba
  */
 public class GeneracionYPrueba extends ExpansorArbol {
 

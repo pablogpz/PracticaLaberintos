@@ -19,7 +19,8 @@ public class CargadorLaberinto {
     private CasillaParser parser;               // Parser de casillas para procesar cada fichero de laberinto
 
     /**
-     * Construye y configura un cargador de laberintos si los parámetros son válidos
+     * Construye y configura un cargador de laberintos si los parámetros son válidos. Carga el primer laberinto
+     * automáticamente
      *
      * @param carpetaLaberintos Ruta a la carpeta donde están los ficheros de laberintos
      * @param parser            Parser de casillas para procesar cada fichero de laberinto
@@ -30,6 +31,7 @@ public class CargadorLaberinto {
         this.parser = parser;
 
         abrirCarpeta();
+        cargarSiguienteLaberinto();
     }
 
     /**

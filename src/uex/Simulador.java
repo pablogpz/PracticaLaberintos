@@ -19,7 +19,6 @@ public class Simulador {
 
         try {
             cargador = new CargadorLaberinto(new File(RUTA_FCH_LABERINTOS), new CasillaParser());
-            cargador.cargarSiguienteLaberinto();            // Carga el primer laberinto
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
