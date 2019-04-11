@@ -104,23 +104,51 @@ public class Laberinto {
         this.posObjetivos = posObjetivos;
     }
 
+    /**
+     * @return Cabecera horizontal para indicar las coordenadas del laberinto
+     */
+    private String cabecera() {
+        StringBuilder stringBuilder = new StringBuilder();
+        int currNumDig = 1;
+
+        for (int i = 0; i < getDimension() && i < 1000; i++) {
+            if (currNumDig >= digitosDe(i + 1) || getDimension() <= (i + 1)) {
+                stringBuilder.append("   ".substring(digitosDe(i) - 1)).append(i);
+            } else {
+                stringBuilder.append("    ".substring(currNumDig)).append(i).append("\u2004");
+                currNumDig++;
+            }
+        }
+
+        return stringBuilder.toString();
+    }
+
+    /**
+     * @param num Número
+     * @return Cuantos dígitos tiene el número
+     */
+    private int digitosDe(int num) {
+        if (num > 9) return 1 + digitosDe(num / 10);
+        else return 1;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
+        final String buffer = "   ".substring(3 - digitosDe(getDimension() - 1));
 
         stringBuilder.append("Umbral : ").append(getUmbral())
                 .append("\nPosición(es) del objetivo(s) : ").append(getPosObjetivos()).append("\n\n")
-                .append("   0   1   2   3   4   5   6   7   8   9").append("\n");
+                .append(buffer.substring(1)).append(cabecera()).append("\n");
         for (int y = 0; y < getDimension(); y++) {
-            stringBuilder.append(y).append(" ");
+            stringBuilder.append(y).append(buffer.substring(digitosDe(y) - 1));
             for (int x = 0; x < getDimension(); x++) {
                 if (y == 0 && x == 0) stringBuilder.append(" >  ");
                 else stringBuilder.append(laberinto[y][x] != null ? laberinto[y][x] : "   ").append(" ");
             }
             stringBuilder.append(y).append("\n");
         }
-        stringBuilder.append("   0   1   2   3   4   5   6   7   8   9").append("\n");
-
+        stringBuilder.append(buffer.substring(1)).append(cabecera()).append("\n");
 
         return stringBuilder.toString();
     }
