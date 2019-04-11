@@ -77,29 +77,29 @@ public class ControladorMovimiento {
                 posFinal.setY(posFinal.getY() - movimiento.getUnidades());
                 break;
             case NORESTE:
-                posFinal.setY(posFinal.getY() - movimiento.getUnidades());
-                posFinal.setX(posFinal.getX() + movimiento.getUnidades());
+                posFinal.setPos(posFinal.getX() + movimiento.getUnidades(),
+                        posFinal.getY() - movimiento.getUnidades());
                 break;
             case ESTE:
                 posFinal.setX(posFinal.getX() + movimiento.getUnidades());
                 break;
             case SURESTE:
-                posFinal.setX(posFinal.getX() + movimiento.getUnidades());
-                posFinal.setY(posFinal.getY() + movimiento.getUnidades());
+                posFinal.setPos(posFinal.getX() + movimiento.getUnidades(),
+                        posFinal.getY() + movimiento.getUnidades());
                 break;
             case SUR:
                 posFinal.setY(posFinal.getY() + movimiento.getUnidades());
                 break;
             case SUROESTE:
-                posFinal.setY(posFinal.getY() + movimiento.getUnidades());
-                posFinal.setX(posFinal.getX() - movimiento.getUnidades());
+                posFinal.setPos(posFinal.getX() - movimiento.getUnidades(),
+                        posFinal.getY() + movimiento.getUnidades());
                 break;
             case OESTE:
                 posFinal.setX(posFinal.getX() - movimiento.getUnidades());
                 break;
             case NOROESTE:
-                posFinal.setX(posFinal.getX() - movimiento.getUnidades());
-                posFinal.setY(posFinal.getY() - movimiento.getUnidades());
+                posFinal.setPos(posFinal.getX() - movimiento.getUnidades(),
+                        posFinal.getY() - movimiento.getUnidades());
         }
 
         return posFinal;

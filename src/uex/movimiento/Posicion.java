@@ -42,6 +42,19 @@ public class Posicion {
     }
 
     /**
+     * Calcula la distancia discretizada en movimientos entre dos posiciones (Distancia diagonal)
+     *
+     * @param posicionDestino Posición de destino
+     * @return Distancia a la posición destino cuantificada en movimientos de casilla
+     */
+    public int distanciaA_discreta(Posicion posicionDestino) {
+        int dx = Math.abs(posicionDestino.getX() - getX());
+        int dy = Math.abs(posicionDestino.getY() - getY());
+
+        return dx + dy - Math.min(dx, dy);
+    }
+
+    /**
      * @return Casilla objetivo más cercana a la posición actual
      */
     public Posicion objetivoMasCercano() {
@@ -49,16 +62,6 @@ public class Posicion {
         posObjetivos.sort(Comparator.comparingInt(this::distanciaA_discreta));
 
         return posObjetivos.get(0);
-    }
-
-    /**
-     * Calcula la distancia discretizada en movimientos entre dos posiciones
-     *
-     * @param posicionDestino Posición de destino
-     * @return Distancia a la posición destino cuantificada en movimientos de casilla
-     */
-    public int distanciaA_discreta(Posicion posicionDestino) {
-        return Math.abs(posicionDestino.getX() - getX()) + Math.abs(posicionDestino.getY() - getY());
     }
 
     /**
@@ -87,6 +90,15 @@ public class Posicion {
      */
     public void setY(int y) {
         this.y = y;
+    }
+
+    /**
+     * @param x Nuevo valor en el eje X
+     * @param y Nuevo valor en el eje Y
+     */
+    public void setPos(int x, int y) {
+        setX(x);
+        setY(y);
     }
 
     /**

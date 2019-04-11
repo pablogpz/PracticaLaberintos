@@ -45,7 +45,6 @@ public abstract class DistanciaAlObjetivo {
     private static class DistanciaAlObjetivo_discreta implements Heuristica {
 
         // Instancia Singleton de la heurística
-
         private static DistanciaAlObjetivo_discreta singletonInstance = null;
 
         private DistanciaAlObjetivo_discreta() {
@@ -77,7 +76,6 @@ public abstract class DistanciaAlObjetivo {
     private static class DistanciaAlObjetivo_real implements Heuristica {
 
         // Instancia Singleton de la heurística
-
         private static DistanciaAlObjetivo_real singletonInstance = null;
 
         private DistanciaAlObjetivo_real() {

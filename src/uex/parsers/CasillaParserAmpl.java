@@ -12,6 +12,8 @@ import java.util.Scanner;
 public class CasillaParserAmpl extends CasillaParser {
 
     public static final String CHAR_OBSTACULO = "▓";
+    private static final int VALOR_OBSTACULO = -1;
+
 
     private List<Posicion> objetivos;
 
@@ -42,7 +44,7 @@ public class CasillaParserAmpl extends CasillaParser {
                     String valorCasilla = valores[x];
 
                     casilla = !valorCasilla.equals(CHAR_OBSTACULO) ? new Casilla(Integer.parseInt(valorCasilla))
-                            : new Casilla(-1, Casilla.TipoCasilla.OBSTACULO);
+                            : new Casilla(VALOR_OBSTACULO, Casilla.TipoCasilla.OBSTACULO);
 
                     laberinto[y][x] = casilla;
                     // Comprueba si es la casilla objetivo

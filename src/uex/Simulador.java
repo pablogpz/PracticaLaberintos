@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 
 public class Simulador {
 
-    private static String RUTA_FCH_LABERINTOS = "res/laberintos_ampl_v2";
+    private static String RUTA_FCH_LABERINTOS = "res/laberintos_ampl";
 
     public static void main(String[] args) {
         // TESTING ->
