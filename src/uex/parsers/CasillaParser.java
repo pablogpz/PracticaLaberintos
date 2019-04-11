@@ -17,9 +17,9 @@ import java.util.Scanner;
  */
 public class CasillaParser {
 
-    private Casilla[][] laberinto;          // Laberinto parseado
-    private Posicion posObjetivo;           // Posición de la casilla objetivo
-    private int umbral;                     // Umbral asociado al laberinto
+    protected Casilla[][] laberinto;          // Laberinto parseado
+    protected Posicion posObjetivo;           // Posición de la casilla objetivo
+    protected int umbral;                     // Umbral asociado al laberinto
 
     public CasillaParser() {
         laberinto = new Casilla[Laberinto.instancia().getDimension()][Laberinto.instancia().getDimension()];
@@ -70,7 +70,7 @@ public class CasillaParser {
     /**
      * @param posObjetivo Nueva posición de la casilla objetivo
      */
-    private void setPosObjetivo(Posicion posObjetivo) {
+    protected void setPosObjetivo(Posicion posObjetivo) {
         this.posObjetivo = posObjetivo;
     }
 
@@ -84,7 +84,7 @@ public class CasillaParser {
     /**
      * @param umbral Nuevo valor del umbral asociado al laberinto parseado
      */
-    private void setUmbral(int umbral) {
+    protected void setUmbral(int umbral) {
         this.umbral = umbral;
     }
 }

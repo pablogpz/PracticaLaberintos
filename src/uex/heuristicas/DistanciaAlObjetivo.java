@@ -65,6 +65,7 @@ public abstract class DistanciaAlObjetivo {
 
             return posActual.distanciaA_discreta(posDestino);
         }
+
     }
 
     /**

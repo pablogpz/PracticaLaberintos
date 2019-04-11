@@ -56,12 +56,12 @@ public class GeneracionYPrueba extends ExpansorArbol {
         boolean exito;                                      // Resultado de la última iteración. Determina el éxito
         int numIt = 0;                                      // Número de iteración
 
+        // REINICIO DE VARIABLES ENTRE RESOLUCIONES DE LABERINTOS
         resetExpansor();
-        // Realiza hasta un cierto número de iteraciones intentando encontrar una solución
         getReloj().start();
+        // Realiza hasta un cierto número de iteraciones intentando encontrar una solución
         do {
-            /* REINICIO DE VARIABLES ENTRE ITERACIONES */
-
+            // REINICIO DE VARIABLES ENTRE ITERACIONES
             setNumMov(0);                                   // Reinicia el número de movimientos realizados en cada it.
             copiaArbol = getArbolDecision().copy();         // Reinicia la copia del nodo raíz inicial en cada it.
 
@@ -101,8 +101,10 @@ public class GeneracionYPrueba extends ExpansorArbol {
         if (!Laberinto.instancia().casilla(cMov.posicion()).esObjetivo()) {
             // Selección de operando
             Posicion posDestino = seleccionarOperando(nodo);
-            /* Actualización del umbral. Si no hay posición disponible se actualiza a un valor mayor que el umbral
-            para detener la iteración */
+            /*
+             * Actualización del umbral. Si no hay posición disponible se actualiza a un valor mayor que el umbral
+             * para detener la iteración
+             */
             nuevoUmbral = estadoLaberinto.getUmbral() + costeAsociado(posDestino);
             setContNodosGen(getContNodosGen() + 1);         // Incrementa en 1 el número de nodos generados
 

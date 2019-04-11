@@ -46,7 +46,8 @@ public class AEstrella extends ExpansorArbol {
      */
     @Override
     public void resolver() {
-        resetExpansor();                                            // Reinicia el expansor para una nueva ejecución
+        // REINICIO DE VARIABLES ENTRE RESOLUCIONES DE LABERINTOS
+        resetExpansor();
 
         // Extracción de variables locales
         Laberinto laberinto = Laberinto.instancia();

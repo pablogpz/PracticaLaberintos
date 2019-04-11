@@ -75,6 +75,15 @@ public class Posicion {
     }
 
     /**
+     * @param x Nuevo valor en el eje X
+     * @param y Nuevo valor en el eje Y
+     */
+    public void setPos(int x, int y) {
+        setX(x);
+        setY(y);
+    }
+
+    /**
      * @param obj Posición a comparar
      * @return Dos posiciones son iguales si coinciden sus coordenadas X e Y
      */
