@@ -18,7 +18,7 @@ public class Casilla {
      */
     public Casilla(int valor) {
         this.valor = valor;
-        tipo = TipoCasilla.ESTANADAR;
+        tipo = TipoCasilla.ESTANDAR;
     }
 
     /**
@@ -54,7 +54,7 @@ public class Casilla {
     @Override
     public String toString() {
         return esObjetivo() ? " " + valor() + " " :
-                getTipo().equals(TipoCasilla.ESTANADAR) ? "[" + valor() + "]" : "\u2004" + CasillaParserAmpl.CHAR_OBSTACULO + "\u2004";
+                getTipo().equals(TipoCasilla.ESTANDAR) ? "[" + valor() + "]" : "\u2004" + CasillaParserAmpl.CHAR_OBSTACULO + "\u2004";
     }
 
     /**
@@ -64,7 +64,7 @@ public class Casilla {
      * OBSTACULO representa una casilla a la que no se puede mover
      */
     public enum TipoCasilla {
-        ESTANADAR,
+        ESTANDAR,
         OBSTACULO
     }
 
