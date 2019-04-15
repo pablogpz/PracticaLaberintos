@@ -3,6 +3,7 @@ package uex;
 import uex.algoritmos.AEstrella;
 import uex.algoritmos.EjecutorExpansor;
 import uex.algoritmos.GeneracionYPrueba;
+import uex.algoritmos.PrimeroMejor;
 import uex.parsers.CasillaParserAmpl;
 
 import java.io.File;
@@ -24,12 +25,14 @@ public class Simulador {
         }
 
         EjecutorExpansor genYPrueba = new EjecutorExpansor(new GeneracionYPrueba(EjecutorExpansor.heuristicaPorDefecto()));
+        EjecutorExpansor primeroMejor = new EjecutorExpansor(new PrimeroMejor(EjecutorExpansor.heuristicaPorDefecto()));
         EjecutorExpansor aEstrella = new EjecutorExpansor(new AEstrella(EjecutorExpansor.heuristicaPorDefecto()));
 
         //noinspection ConstantConditions
         do {
             // Ejecuta cada algoritmo implementado con cada heurística implementada
             genYPrueba.ejecutar();
+            primeroMejor.ejecutar();
             aEstrella.ejecutar();
         } while (cargador.cargarSiguienteLaberinto());
 

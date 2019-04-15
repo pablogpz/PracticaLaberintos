@@ -58,8 +58,9 @@ public class AEstrella extends ExpansorArbol {
 
         getReloj().start();
 
+        // Comprueba si es la casilla objetivo o si hay suficiente umbral para continuar el algoritmo
         while (!laberinto.casilla(mejorNodo.getContent().getJugador().ctrlMovimiento().posicion()).esObjetivo() &&
-                mejorNodo.getContent().getUmbral() < laberinto.getUmbral()) {
+                mejorNodo.getContent().getUmbral() <= laberinto.getUmbral()) {
             // Cerrar el nodo más prometedor
             agregarNodoCerrado(mejorNodo);
             // Expande todos sus estados
@@ -105,6 +106,7 @@ public class AEstrella extends ExpansorArbol {
 
         getReloj().stop();
 
+        // Se encontró una solución si el umbral está por debajo del establecido, sino no tiene solución
         if (mejorNodo.getContent().getUmbral() < laberinto.getUmbral()) {
             System.out.println("SOLUCIÓN ENCONTRADA");
             mostrarSolucion(mejorNodo);
