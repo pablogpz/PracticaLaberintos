@@ -2,9 +2,14 @@ package uex.algoritmos;
 
 import com.google.common.base.Stopwatch;
 import uex.Laberinto;
+import uex.durian.TreeDef;
 import uex.durian.TreeNode;
+import uex.durian.TreeStream;
 import uex.heuristicas.Heuristica;
 import uex.movimiento.Posicion;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Clase que modela un esquema algorítmo para manipular el laberinto. Se basa en un arbol de decisiones formado por
@@ -75,6 +80,28 @@ public abstract class ExpansorArbol {
      * @param arbolDecision Árbol de decicisón que contiene la solución
      */
     protected abstract void mostrarSolucion(TreeNode<EstadoLaberinto> arbolDecision);
+
+    /**
+     * Representación de la solución de un algoritmo cuando la solución se basa en la única hoja generada
+     *
+     * @param arbolDecision Árbol de decicisón que contiene la solución
+     */
+    protected void mostrarSolucionUnaHoja(TreeNode<EstadoLaberinto> arbolDecision) {
+        // Lista de nodos del árbol
+        List<TreeNode<EstadoLaberinto>> collect = TreeStream.depthFirst(TreeNode.treeDef(), arbolDecision)
+                .collect(Collectors.toList());
+        // Filtrado del nodo solución, el que no tiene hijos
+        TreeNode<EstadoLaberinto> sol = TreeDef.filteredList(collect, nodo -> nodo.getChildren().size() == 0).get(0);
+
+        // Imprime tiempo empleado
+        System.out.println("Tiempo empleado : " + getReloj());
+        // Imprime el número de nodos generados en memoria
+        System.out.println("Número de nodos generados : " + getContNodosGen());
+        // Representación del camino solución
+        System.out.println(new Laberinto.Solucionado(sol.getContent().getPosVisitadas(), sol.getContent().getUmbral()));
+        // Secuencia de estados. Representación de la expansión
+        System.out.println(arbolDecision.toStringDeep() + "\n");
+    }
 
     /**
      * @return Función heurística a aplicar a los nodos del árbol
