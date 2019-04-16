@@ -47,8 +47,8 @@ public class PrimeroMejor extends ExpansorArbol {
         getReloj().start();
 
         // Comprueba si es la casilla objetivo o si queda algún nodo para explorar
-        while (!laberinto.casilla(mejorNodo.getContent().getJugador().ctrlMovimiento().posicion()).esObjetivo() &&
-                nodosAbiertos.size() != 0) {
+        while (nodosAbiertos.size() != 0
+                && !laberinto.casilla(mejorNodo.getContent().getJugador().ctrlMovimiento().posicion()).esObjetivo()) {
             agregarNodoCerrado(mejorNodo);                          // Cierra el nodo más prometedor
 
             // Comprueba que el mejor nodo siga siendo solución viable, sino lo descartamos y pasamos al siguiente mejor
