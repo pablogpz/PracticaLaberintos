@@ -2,9 +2,7 @@ package uex.algoritmos;
 
 import uex.Jugador;
 import uex.Laberinto;
-import uex.durian.TreeDef;
 import uex.durian.TreeNode;
-import uex.durian.TreeStream;
 import uex.heuristicas.Heuristica;
 import uex.movimiento.ControladorMovimiento;
 import uex.movimiento.Posicion;
@@ -96,11 +94,12 @@ public class GeneracionYPrueba extends ExpansorArbol {
         Jugador clon;                                       // Copia del jugador para el siguiente nodo del árbol
         int nuevoUmbral;                                    // Umbral actualizado
         List<Posicion> visitadas;                           // Nueva lista de visitados
+        Posicion posDestino;                                // Operando seleccionado
 
-        // Comprueba si la casilla actual es el objetivo
+        // Comprueba si la casilla actual es el objetivo, sino expande otro nodo
         if (!Laberinto.instancia().casilla(cMov.posicion()).esObjetivo()) {
             // Selección de operando
-            Posicion posDestino = seleccionarOperando(nodo);
+            posDestino = seleccionarOperando(nodo);
             /*
              * Actualización del umbral. Si no hay posición disponible se actualiza a un valor mayor que el umbral
              * para detener la iteración
@@ -109,7 +108,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
             setContNodosGen(getContNodosGen() + 1);         // Incrementa en 1 el número de nodos generados
 
             // Determina si el nuevo umbral no supera el disponible
-            if (nuevoUmbral < Laberinto.instancia().getUmbral()) {
+            if (nuevoUmbral <= Laberinto.instancia().getUmbral()) {
                 // Comrprobación heurística de si merece la pena seguir evaluando esta iteración
                 if (!pruebaHeuristica(nodo)) return false;
 
@@ -198,20 +197,7 @@ public class GeneracionYPrueba extends ExpansorArbol {
      */
     @Override
     protected void mostrarSolucion(TreeNode<EstadoLaberinto> arbolDecision) {
-        // Lista de nodos del árbol
-        List<TreeNode<EstadoLaberinto>> collect = TreeStream.depthFirst(TreeNode.treeDef(), arbolDecision)
-                .collect(Collectors.toList());
-        // Filtrado del nodo solución, el que no tiene hijos
-        TreeNode<EstadoLaberinto> sol = TreeDef.filteredList(collect, nodo -> nodo.getChildren().size() == 0).get(0);
-
-        // Imprime tiempo empleado
-        System.out.println("Tiempo empleado : " + getReloj());
-        // Imprime el número de nodos generados en memoria
-        System.out.println("Número de nodos generados : " + getContNodosGen());
-        // Representación del camino solución
-        System.out.println(new Laberinto.Solucionado(sol.getContent().getPosVisitadas(), sol.getContent().getUmbral()));
-        // Secuencia de estados. Representación de la expansión
-        System.out.println(arbolDecision.toStringDeep() + "\n");
+        mostrarSolucionUnaHoja(arbolDecision);
     }
 
     /**

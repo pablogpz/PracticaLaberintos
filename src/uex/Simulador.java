@@ -1,9 +1,6 @@
 package uex;
 
-import uex.algoritmos.AEstrella;
-import uex.algoritmos.EjecutorExpansor;
-import uex.algoritmos.GeneracionYPrueba;
-import uex.algoritmos.PrimeroMejor;
+import uex.algoritmos.*;
 import uex.parsers.CasillaParserAmpl;
 
 import java.io.File;
@@ -14,9 +11,8 @@ public class Simulador {
     private static String RUTA_FCH_LABERINTOS = "res/laberintos_ampl";
 
     public static void main(String[] args) {
-        // TESTING ->
-
         CargadorLaberinto cargador = null;
+        int idx = 1;
 
         try {
             cargador = new CargadorLaberinto(new File(RUTA_FCH_LABERINTOS), new CasillaParserAmpl());
@@ -24,19 +20,24 @@ public class Simulador {
             e.printStackTrace();
         }
 
+        // Ejecutores de cada algorítmo de búsqueda
         EjecutorExpansor genYPrueba = new EjecutorExpansor(new GeneracionYPrueba(EjecutorExpansor.heuristicaPorDefecto()));
+        EjecutorExpansor escSimple = new EjecutorExpansor(new EscaladaSimple(EjecutorExpansor.heuristicaPorDefecto()));
+        EjecutorExpansor escMaxPen = new EjecutorExpansor(new EscaladaMaximaPendiente(EjecutorExpansor.heuristicaPorDefecto()));
         EjecutorExpansor primeroMejor = new EjecutorExpansor(new PrimeroMejor(EjecutorExpansor.heuristicaPorDefecto()));
         EjecutorExpansor aEstrella = new EjecutorExpansor(new AEstrella(EjecutorExpansor.heuristicaPorDefecto()));
 
+        // Ejecuta cada algoritmo implementado con cada heurística implementada
         //noinspection ConstantConditions
         do {
-            // Ejecuta cada algoritmo implementado con cada heurística implementada
+            System.out.println("\n\n\t--- LABERINTO " + idx++ + " ---\n\n");
+
             genYPrueba.ejecutar();
+            escSimple.ejecutar();
+            escMaxPen.ejecutar();
             primeroMejor.ejecutar();
             aEstrella.ejecutar();
         } while (cargador.cargarSiguienteLaberinto());
-
-        // <- TESTING
     }
 
 }
