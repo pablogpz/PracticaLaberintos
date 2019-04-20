@@ -63,7 +63,6 @@ public class EscaladaMaximaPendiente extends ExpansorArbol {
         if (!Laberinto.instancia().casilla(cMov.posicion()).esObjetivo()) {
             // Obtiene el mejor candidato
             estadoExpandido = mejorEstadoExpandido(nodo);
-            setContNodosGen(getContNodosGen() + 1);                 // Incrementa en 1 el número de nodos generados
 
             // Comprueba si el mejor candidato no es peor que el padre
             if (estadoExpandido != null &&
@@ -122,6 +121,7 @@ public class EscaladaMaximaPendiente extends ExpansorArbol {
 
             // Crea el nuevo estado expandido para evaluarlo
             estadosExpandidos.add(new EstadoLaberinto(clon, visitadas, nuevoUmbral));
+            setContNodosGen(getContNodosGen() + 1);                 // Incrementa en 1 el número de nodos generados
         }
 
         return estadosExpandidos
