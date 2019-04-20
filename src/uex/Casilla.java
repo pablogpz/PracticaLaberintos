@@ -1,6 +1,6 @@
 package uex;
 
-import uex.parsers.CasillaParserAmpl;
+import static uex.parsers.CasillaParserAmpl.CHAR_OBSTACULO;
 
 /**
  * Clase encargada de modelar la casilla de un laberinto.
@@ -54,7 +54,7 @@ public class Casilla {
     @Override
     public String toString() {
         return esObjetivo() ? " " + valor() + " " :
-                getTipo().equals(TipoCasilla.ESTANDAR) ? "[" + valor() + "]" : "\u2004" + CasillaParserAmpl.CHAR_OBSTACULO + "\u2004";
+                getTipo().equals(TipoCasilla.ESTANDAR) ? "[" + valor() + "]" : " " + CHAR_OBSTACULO + " ";
     }
 
     /**

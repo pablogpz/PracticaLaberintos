@@ -11,9 +11,9 @@ import java.util.Scanner;
 
 public class CasillaParserAmpl extends CasillaParser {
 
-    public static final String CHAR_OBSTACULO = "▓";
+    public static final String CHAR_OBSTACULO = "*";
     private static final int VALOR_OBSTACULO = -1;
-
+    private static final String DELIM = ",";
 
     private List<Posicion> objetivos;
 
@@ -38,7 +38,7 @@ public class CasillaParserAmpl extends CasillaParser {
             setUmbral(Integer.parseInt(scanner.nextLine()));
             // Lectura del resto de líneas: valores separados por comas
             for (int y = 0; y < Laberinto.instancia().getDimension(); y++) {
-                valores = scanner.nextLine().split(",");
+                valores = scanner.nextLine().split(DELIM);
                 for (int x = 0; x < Laberinto.instancia().getDimension(); x++) {
                     Casilla casilla;
                     String valorCasilla = valores[x];

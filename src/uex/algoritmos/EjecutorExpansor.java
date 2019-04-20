@@ -4,6 +4,10 @@ import uex.Laberinto;
 import uex.heuristicas.Heuristica;
 import uex.heuristicas.Heuristicas;
 
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 
 /**
@@ -64,10 +68,22 @@ public class EjecutorExpansor {
     }
 
     /**
-     * Muestra por consola la representación del laberinto
+     * Muestra por consola la representación del laberinto con representación de caracteres UNICODE (solo en plataformas
+     * con soporte para este conjunto de caracteres)
      */
     private void imprimirLaberinto() {
-        System.out.println(Laberinto.instancia());
+        Charset utf8 = Charset.forName("UTF-8");
+        Charset defCharset = Charset.defaultCharset();
+        PrintStream printStream;
+        byte[] bytes;
+
+        bytes = Laberinto.instancia().toString().getBytes(StandardCharsets.UTF_8);
+        try {
+            printStream = new PrintStream(System.out, true, utf8.name());
+            printStream.println(new String(bytes, defCharset.name()));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
