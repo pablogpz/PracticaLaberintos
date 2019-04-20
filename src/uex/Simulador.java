@@ -11,7 +11,7 @@ public class Simulador {
     private static final String DEF_RUTA_FCH_LABERINTOS = "res/laberintos";
 
     public static void main(String[] args) {
-        boolean hayRutaLabAlt = args[0] != null;                // Si se ha indicado una carpeta externa
+        boolean hayRutaLabAlt = args.length != 0;                   // Si se ha indicado una carpeta externa
         CargadorLaberinto cargador = null;
         int idx = 1;
 
