@@ -42,7 +42,7 @@ public class CargadorLaberinto {
      * @return Si es un fichero de laberinto válido
      */
     private static boolean ficheroValido(File dir, String name) {
-        return name.matches("\\w+.lab$");
+        return name.matches("\\w+(.lab|.txt)$");
     }
 
     /**

@@ -8,14 +8,16 @@ import java.io.FileNotFoundException;
 
 public class Simulador {
 
-    private static String RUTA_FCH_LABERINTOS = "res/laberintos";
+    private static final String DEF_RUTA_FCH_LABERINTOS = "res/laberintos";
 
     public static void main(String[] args) {
+        boolean hayRutaLabAlt = args[0] != null;                // Si se ha indicado una carpeta externa
         CargadorLaberinto cargador = null;
         int idx = 1;
 
         try {
-            cargador = new CargadorLaberinto(new File(RUTA_FCH_LABERINTOS), new CasillaParser());
+            cargador = new CargadorLaberinto(new File(hayRutaLabAlt ? args[0] : DEF_RUTA_FCH_LABERINTOS),
+                    new CasillaParser());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
