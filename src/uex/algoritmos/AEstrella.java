@@ -107,7 +107,7 @@ public class AEstrella extends ExpansorArbol {
         getReloj().stop();
 
         // Se encontró una solución si el umbral está por debajo del establecido, sino no tiene solución
-        if (mejorNodo.getContent().getUmbral() < laberinto.getUmbral()) {
+        if (mejorNodo.getContent().getUmbral() <= laberinto.getUmbral()) {
             System.out.println("SOLUCIÓN ENCONTRADA");
             mostrarSolucion(mejorNodo);
         } else {
