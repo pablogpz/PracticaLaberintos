@@ -2,6 +2,10 @@ package uex.movimiento;
 
 /**
  * Un tipo de movimiento que siempre tiene como desplazamiento la unidad (1)
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class MovimientoUnitario extends Movimiento {
 

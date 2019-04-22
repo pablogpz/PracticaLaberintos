@@ -3,6 +3,10 @@ package uex;
 /**
  * Clase encargada de modelar la casilla de un laberinto.
  * Cada casilla almacena un valor que indica qué tipo de casllla es
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class Casilla {
 

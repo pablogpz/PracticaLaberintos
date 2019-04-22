@@ -14,6 +14,10 @@ import java.util.Scanner;
  * <p>
  * La primera línea del fichero debe contener un entero indicando el umbral.
  * Admite valores enteros como representación de casillas separados por comas y cada fila en una nueva línea
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class CasillaParser {
 

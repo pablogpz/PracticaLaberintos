@@ -2,6 +2,10 @@ package uex.movimiento;
 
 /**
  * Clase encargada de modelar las distintas posiciones en laberinto siguiendo unos ejes cartesianos XY
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class Posicion {
 

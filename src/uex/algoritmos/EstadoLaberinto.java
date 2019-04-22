@@ -11,6 +11,10 @@ import java.util.List;
  * Clase que modela un estado del laberinto tras realizar una acción sobre él. Mantiene la definición del laberinto
  * estable durante la ejecución de un algoritmo guardando el estado del jugador, una lista de posiciones visitadas y el
  * umbral restante
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class EstadoLaberinto implements Comparable {
 

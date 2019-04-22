@@ -3,6 +3,10 @@ package uex.movimiento;
 /**
  * Clase que modela una transformación de posiciones por movimiento. Un movimiento es un desplazamiento de unas unidades
  * dadas en una dirección dada
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class Movimiento {
 

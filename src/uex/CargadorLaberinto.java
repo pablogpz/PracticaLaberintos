@@ -11,6 +11,10 @@ import java.util.Objects;
 /**
  * Clase encargada de cargar los laberintos en la instancia Singleton de la clase {@link Laberinto}.
  * Los ficheros de laberinto deben estar contenidos en una carpeta y deben tener la extensión {@code .lab}
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class CargadorLaberinto {
 

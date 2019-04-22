@@ -10,6 +10,10 @@ import uex.movimiento.Posicion;
  * @see Calculo
  * @see DistanciaAlObjetivo_real
  * @see DistanciaAlObjetivo_discreta
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public abstract class DistanciaAlObjetivo {
 

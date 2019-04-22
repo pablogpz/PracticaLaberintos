@@ -8,6 +8,10 @@ import java.util.Iterator;
 
 /**
  * Maneja la ejecución de un esquema algorítmico sobre el laberinto y bajo distintos parámetros
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class EjecutorExpansor {
 

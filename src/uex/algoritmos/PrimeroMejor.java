@@ -10,6 +10,13 @@ import uex.movimiento.Posicion;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Clase que implementa el algoritmo del Primero mejor
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
+ */
 public class PrimeroMejor extends ExpansorArbol {
 
     private ArrayList<TreeNode<EstadoLaberinto>> nodosAbiertos;     // Colección de nodos en exploración
@@ -23,6 +30,9 @@ public class PrimeroMejor extends ExpansorArbol {
         resetExpansor();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void resetExpansor() {
         setArbolDecision(new TreeNode<>(null, EstadoLaberinto.estadoInicial()));
@@ -34,6 +44,9 @@ public class PrimeroMejor extends ExpansorArbol {
         getReloj().reset();                                         // Reinicia el cronómetro
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void resolver() {
         // REINICIO DE VARIABLES ENTRE RESOLUCIONES DE LABERINTOS
@@ -93,15 +106,27 @@ public class PrimeroMejor extends ExpansorArbol {
         }
     }
 
+    /**
+     * Agrega un nodo a la cola con prioridad de nodos abiertos. No se permiten duplicados
+     *
+     * @param nodoExpandido Nuevo nodo a agregar
+     */
     private void agregarNodoAbierto(TreeNode<EstadoLaberinto> nodoExpandido) {
         nodosAbiertos.add(nodoExpandido);
         ordenarNodosAbiertos();
     }
 
+    /**
+     * Ordena los nodos abiertos por puntuación heurística h'
+     */
     private void ordenarNodosAbiertos() {
         nodosAbiertos.sort(Comparator.comparingInt(nodo -> aplicarHeuristica(nodo).intValue()));
     }
 
+    /**
+     * @param estadoLaberintoPonderado Estado del que se desea encontrar su equivalencia
+     * @return Nodo equivalente al especificado ya expandido
+     */
     private TreeNode<EstadoLaberinto> recNodoEquiv(EstadoLaberinto estadoLaberintoPonderado) {
         return nodosExpandidos()
                 .stream()
@@ -109,11 +134,19 @@ public class PrimeroMejor extends ExpansorArbol {
                 .collect(Collectors.toList()).get(0);
     }
 
+    /**
+     * Elimina el nodo especificado de la cola de abiertos y lo agrega a la colección de nodos cerrados
+     *
+     * @param nodo Nodo abierto a mover a cerrados
+     */
     private void agregarNodoCerrado(TreeNode<EstadoLaberinto> nodo) {
         nodosAbiertos.remove(nodo);
         nodosCerrados.add(nodo);
     }
 
+    /**
+     * @return Todos los nodos expandidos, tanto en abiertos como en cerrados
+     */
     private Collection<TreeNode<EstadoLaberinto>> nodosExpandidos() {
         Set<TreeNode<EstadoLaberinto>> nodos = new HashSet<>(new HashSet<>(nodosAbiertos));
         nodos.addAll(nodosCerrados);
@@ -121,6 +154,10 @@ public class PrimeroMejor extends ExpansorArbol {
         return nodos;
     }
 
+    /**
+     * @param estadoLaberintoPonderado Nodo a comprobar
+     * @return Si el nodo especificado ya tiene un equivalente expandido
+     */
     private boolean enNodos(EstadoLaberinto estadoLaberintoPonderado) {
         return nodosExpandidos()
                 .stream()
@@ -129,6 +166,14 @@ public class PrimeroMejor extends ExpansorArbol {
                 .collect(Collectors.toSet()).size() != 0;
     }
 
+    /**
+     * Selecciona un operando aplicable a un nodo. La lista de posiciones visitadas en primer lugar contiene la posicion
+     * del nodo que creó el nodo actual, y tras sucesivas llamadas a este método, contendrá cada posicion expandida
+     * hasta que no queden posiciones posibles. Evita que se vuelva hacia atrás por el nodo padre
+     *
+     * @param nodo Nodo con el estado laberinto para el que seleccionar un operando
+     * @return En cada llamada un operando disponible no visitado. Cuando se agoten devolverá nulo
+     */
     @Override
     protected Posicion seleccionarOperando(TreeNode<EstadoLaberinto> nodo) {
         // Variables del estado del laberinto actual
@@ -159,6 +204,12 @@ public class PrimeroMejor extends ExpansorArbol {
         return posPosibles.get(0);
     }
 
+    /**
+     * Muestra la solución al laberinto mostrando las casillas que conforman la solución y un resumen de cada estado
+     * involucrado en la solución con el jugador, puntuación heurística, umbral acumulado y coste ponderado
+     *
+     * @param arbolDecision Árbol de decisión que representa la solución
+     */
     @Override
     protected void mostrarSolucion(TreeNode<EstadoLaberinto> arbolDecision) {
         // Imprime tiempo empleado
@@ -172,6 +223,10 @@ public class PrimeroMejor extends ExpansorArbol {
         System.out.println(arbolDecision.getPath(EstadoLaberinto::toString, ""));
     }
 
+    /**
+     * @param nodo   Árbol de decisión con la solución
+     * @param camino Camino en el árbol de decisión que representa la solución
+     */
     private void recuperarCamino(TreeNode<EstadoLaberinto> nodo, ArrayList<Posicion> camino) {
         camino.add(nodo.getContent().getJugador().ctrlMovimiento().posicion());
         if (nodo.getParent() != null)

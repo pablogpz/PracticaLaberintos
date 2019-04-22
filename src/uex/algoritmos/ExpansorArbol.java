@@ -15,6 +15,10 @@ import java.util.stream.Collectors;
  * Clase que modela un esquema algorítmo para manipular el laberinto. Se basa en un arbol de decisiones formado por
  * {@link EstadoLaberinto} y que aplica una heurística dada por una función que toma como entrada un estado del laberinto
  * y devuelve un entero como resultado de la estimación
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public abstract class ExpansorArbol {
 

@@ -7,6 +7,10 @@ import java.util.List;
 /**
  * Clase que modela el comportamiento del Laberinto (encargado de gestionar las casillas
  * asociadas a este mismo). Dimensión establecida : 10
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class Laberinto {
 
