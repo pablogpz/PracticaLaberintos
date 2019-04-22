@@ -13,6 +13,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Clase que implementa el algoritmo de Escalada de Máxima Pendiente
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
+ */
 public class EscaladaMaximaPendiente extends ExpansorArbol {
 
     public EscaladaMaximaPendiente(Heuristica heuristica) {
@@ -30,6 +37,9 @@ public class EscaladaMaximaPendiente extends ExpansorArbol {
         getReloj().reset();                                         // Reinicia el cronómetro
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void resolver() {
         boolean exito;
@@ -51,6 +61,12 @@ public class EscaladaMaximaPendiente extends ExpansorArbol {
         }
     }
 
+    /**
+     * Función sumergida para repetir el algoritmo el número de iteraciones que se deseen
+     *
+     * @param nodo Árbol de decisión
+     * @return Si se ha alcanzado una solución
+     */
     private boolean resolver(TreeNode<EstadoLaberinto> nodo) {
         // Variables del estado del laberinto actual
         EstadoLaberinto estadoLaberinto = nodo.getContent();
@@ -78,6 +94,10 @@ public class EscaladaMaximaPendiente extends ExpansorArbol {
         }
     }
 
+    /**
+     * @param nodo Nodo del árbol de decisión del que se desea conocer sus operandos aplicables
+     * @return Colección de operandos aplicables al estado dado
+     */
     private Collection<Posicion> operandosDisponibles(TreeNode<EstadoLaberinto> nodo) {
         // Variables del estado del laberinto actual
         EstadoLaberinto estadoLaberinto = nodo.getContent();
@@ -94,11 +114,20 @@ public class EscaladaMaximaPendiente extends ExpansorArbol {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * @param nodo Nodo Árbol de decisión a evaluar
+     * @return Imposible
+     * @throws UnsupportedOperationException La selección de operandos se realiza mediante otro método
+     */
     @Override
     protected Posicion seleccionarOperando(TreeNode<EstadoLaberinto> nodo) {
         throw new UnsupportedOperationException("La selección de operando se lleva a cabo de otra manera");
     }
 
+    /**
+     * @param nodo Nodo del que se desea conocer su mejor hijo
+     * @return Mejor estado hijo generado por el nodo especificado
+     */
     private EstadoLaberinto mejorEstadoExpandido(TreeNode<EstadoLaberinto> nodo) {
         // Variables del estado del laberinto actual
         EstadoLaberinto estadoLaberinto = nodo.getContent();
@@ -130,6 +159,11 @@ public class EscaladaMaximaPendiente extends ExpansorArbol {
                 .orElse(null);
     }
 
+    /**
+     * Muestra la solución al laberinto
+     *
+     * @param arbolDecision Árbol de decicisón que contiene la solución
+     */
     @Override
     protected void mostrarSolucion(TreeNode<EstadoLaberinto> arbolDecision) {
         mostrarSolucionUnaHoja(arbolDecision);

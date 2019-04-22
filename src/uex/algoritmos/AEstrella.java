@@ -11,7 +11,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * TODO Documentar A*
+ * Clase que implementa el algoritmo de la A Estrella (A*)
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class AEstrella extends ExpansorArbol {
 
@@ -42,7 +46,7 @@ public class AEstrella extends ExpansorArbol {
     }
 
     /**
-     * TODO Documentar resolver A*
+     * {@inheritDoc}
      */
     @Override
     public void resolver() {
@@ -116,7 +120,12 @@ public class AEstrella extends ExpansorArbol {
     }
 
     /**
-     * TODO Documentar seleccionarOperando A*
+     * Selecciona un operando aplicable a un nodo. La lista de posiciones visitadas en primer lugar contiene la posicion
+     * del nodo que creó el nodo actual, y tras sucesivas llamadas a este método, contendrá cada posicion expandida
+     * hasta que no queden posiciones posibles. Evita que se vuelva hacia atrás por el nodo padre
+     *
+     * @param nodo Nodo con el estado laberinto para el que seleccionar un operando
+     * @return En cada llamada un operando disponible no visitado. Cuando se agoten devolverá nulo
      */
     @Override
     protected Posicion seleccionarOperando(TreeNode<EstadoLaberinto> nodo) {
@@ -150,7 +159,10 @@ public class AEstrella extends ExpansorArbol {
     }
 
     /**
-     * TODO Documentar mostrarSolucion A*
+     * Muestra la solución al laberinto mostrando las casillas que conforman la solución y un resumen de cada estado
+     * involucrado en la solución con el jugador, puntuación heurística, umbral acumulado y coste ponderado
+     *
+     * @param arbolDecision Árbol de decisión que representa la solución
      */
     @Override
     protected void mostrarSolucion(TreeNode<EstadoLaberinto> arbolDecision) {

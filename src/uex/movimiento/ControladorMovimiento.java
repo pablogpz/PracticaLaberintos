@@ -8,6 +8,13 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Clase que implementa la mecánica de movimiento del jugador
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
+ */
 public class ControladorMovimiento {
 
     // Coordendas de la posición inicial común a los controladores de movimiento

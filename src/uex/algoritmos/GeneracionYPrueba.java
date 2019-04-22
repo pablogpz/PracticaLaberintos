@@ -14,6 +14,9 @@ import java.util.stream.Collectors;
 
 /**
  * TODO Documentar GeneracionYPrueba
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class GeneracionYPrueba extends ExpansorArbol {
 

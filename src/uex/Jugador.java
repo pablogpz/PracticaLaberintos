@@ -4,6 +4,10 @@ import uex.movimiento.ControladorMovimiento;
 
 /**
  * Clase encargada de modelar el comportamiento de un jugador sobre el tablero
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class Jugador implements Cloneable {
 

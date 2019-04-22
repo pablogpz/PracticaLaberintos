@@ -10,6 +10,10 @@ import java.util.List;
 /**
  * Estado del laberinto ponderado mediante una función de ponderación que devuelve el resultado de sumar la
  * puntuación heurística y el coste acumulado (umbral)
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class EstadoLaberintoPonderado extends EstadoLaberinto {
 

@@ -9,6 +9,10 @@ import java.util.Set;
 
 /**
  * Utilidades relacionadas con el tratamiento de las implementaciones de las funciones heurísticas
+ *
+ * @author Juan Pablo García Plaza Pérez
+ * @author José Ángel Concha Carrasco
+ * @author Sergio Barrantes de la Osa
  */
 public class Heuristicas {
 
