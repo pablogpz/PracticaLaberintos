@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * TODO Documentar GeneracionYPrueba
+ * Clase que implementa el algoritmo de Generación y prueba
+ *
  * @author Juan Pablo García Plaza Pérez
  * @author José Ángel Concha Carrasco
  * @author Sergio Barrantes de la Osa
